@@ -42,7 +42,7 @@
 | **B-01** | **Action:** Add Optional Fields (v1 $\rightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (Default=null) | **Success**<br>(Auto-fill default) | ✅<br>PASS | Consumer v2 เติมค่า `null` ให้กับข้อมูล v1 ที่ไม่มีฟิลด์เหล่านี้ได้อัตโนมัติ |
 | **B-02** | **Action:** Remove Field (v2 $\rightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Success**<br>(Ignore field) | ✅<br>PASS | Consumer v3 มองข้ามฟิลด์ `dropoff_point` ที่ติดมากับข้อมูลเก่า (v2) ได้ |
 | **B-03** | **Action:** Add Required Field (No Default)<br>**Scenario:** เพิ่มฟิลด์ `citizen_id` **โดยไม่ใส่ Default** | **Failure**<br>(Error 409) | ❌<br>FAIL | Consumer ใหม่พังทันที เพราะข้อมูลเก่าไม่มีค่านี้ส่งมาและไม่มี Default ให้ใช้ |
-| **B-04** | **Action:** Change Type (Compatible)<br>**Scenario:** เปลี่ยน `int` เป็น `long` | **Success**<br>(Type Promotion) | ✅<br>PASS | Avro อนุญาตให้เปลี่ยน Type จากเล็กไปใหญ่ (Int $\rightarrow$ Long) ได้ในโหมดนี้ |
+| **B-04** | **Action:** Change Type (Compatible)<br>**Scenario:** เปลี่ยน `int` เป็น `float` | **Success**<br>(Type Promotion) | ✅<br>PASS | **Updated:** Avro อนุญาตให้เปลี่ยน `int` (จำนวนเต็ม) เป็น `float` (ทศนิยม) ได้อย่างปลอดภัย (เช่น 5 $\rightarrow$ 5.0) |
 | **B-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | ไม่สามารถแปลงตัวเลขเป็นข้อความได้โดยตรง Consumer จะ Error |
 
 
@@ -66,11 +66,11 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 **Experiment details:**
 | ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
-| **F-01** | **Action:** Add Optional Fields (v1 $\rightarrow$ v2)<br>**Scenario:** ส่งข้อมูล v2 (มี `phone`) ให้ Consumer v1 | **Success**<br>(Ignore unknown) | ✅ PASS | Consumer v1 ไม่รู้จักฟิลด์ใหม่ จึงมองข้ามไปและอ่านข้อมูลส่วนที่เหลือได้ |
-| **F-02** | **Action:** Remove Required Field (v2 $\rightarrow$ v3)<br>**Scenario:** ส่งข้อมูล v3 (ไม่มี `dropoff_point`) ให้ Consumer v2 | **Failure**<br>(Missing Required) | ❌ FAIL | **Breaking Change!** Consumer v2 จำเป็นต้องใช้ `dropoff_point` เมื่อ v3 ไม่ส่งมาให้ ระบบจึงล่ม |
-| **F-03** | **Action:** Delete Field (with Default)<br>**Scenario:** ลบฟิลด์ที่มี Default ใน Schema เก่า | **Success**<br>(Use Local Default) | ✅ PASS | Consumer เก่าจะดึงค่า Default ในเครื่องตัวเองมาใช้แทนค่าที่หายไป |
-| **F-04** | **Action:** Change Type (Risk)<br>**Scenario:** เปลี่ยน `long` เป็น `int` | **Failure**<br>(Potential Data Loss) | ❌ FAIL | การส่งข้อมูลใหม่ (Long) ให้ Consumer เก่า (Int) อาจทำให้ข้อมูลล้น (Overflow) |
-| **F-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌ FAIL | Consumer เก่าคาดหวังตัวเลข แต่ได้รับข้อความ อ่านไม่ออกแน่นอน |
+| **F-01** | **Action:** Add Optional Fields (v1 $\rightarrow$ v2)<br>**Scenario:** ส่งข้อมูล v2 (มี `phone`) ให้ Consumer v1 | **Success**<br>(Ignore unknown) | ✅<br>PASS | Consumer v1 ไม่รู้จักฟิลด์ใหม่ จึงมองข้ามไปและอ่านข้อมูลส่วนที่เหลือได้ |
+| **F-02** | **Action:** Remove Required Field (v2 $\rightarrow$ v3)<br>**Scenario:** ส่งข้อมูล v3 (ไม่มี `dropoff_point`) ให้ Consumer v2 | **Failure**<br>(Missing Required) | ❌<br>FAIL | **Breaking Change!** Consumer v2 จำเป็นต้องใช้ `dropoff_point` เมื่อ v3 ไม่ส่งมาให้ ระบบจึงล่ม |
+| **F-03** | **Action:** Delete Field (with Default)<br>**Scenario:** ลบฟิลด์ที่มี Default ใน Schema เก่า | **Success**<br>(Use Local Default) | ✅<br>PASS | Consumer เก่าจะดึงค่า Default ในเครื่องตัวเองมาใช้แทนค่าที่หายไป |
+| **F-04** | **Action:** Change Type (Risk)<br>**Scenario:** เปลี่ยน `float` เป็น `int` | **Failure**<br>(Precision Loss) | ❌<br>FAIL | **Updated:** การส่งข้อมูลทศนิยม (Float) ให้ Consumer ที่รอรับจำนวนเต็ม (Int) ทำไม่ได้ เพราะข้อมูลจะสูญหาย (เช่น 5.5 $\rightarrow$ 5) |
+| **F-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | Consumer เก่าคาดหวังตัวเลข แต่ได้รับข้อความ อ่านไม่ออกแน่นอน |
 
 
 ### สรุปผลการทดลอง
@@ -94,11 +94,11 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 **Experiment details:**
 | ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
-| **FULL-01** | **Action:** Add Optional Fields (v1 $\leftrightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (with default) | **Success**<br>(Bidirectional Safe) | ✅ PASS | ปลอดภัยทั้ง 2 ทาง: ขา Backward เติม Default, ขา Forward มองข้ามฟิลด์ |
-| **FULL-02** | **Action:** Remove Required Field (v2 $\leftrightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Failure**<br>(Fails Forward Check) | ❌ FAIL | พังที่ขา **Forward** (เหมือน case F-02) ทำให้ไม่ผ่านเกณฑ์ Full Mode |
-| **FULL-03** | **Action:** Remove Optional Field<br>**Scenario:** ลบฟิลด์ `phone` (ที่มี Default null) | **Success**<br>(Bidirectional Safe) | ✅ PASS | หากลบฟิลด์ที่มี Default value จะถือว่าปลอดภัยทั้งสองทิศทาง |
-| **FULL-04** | **Action:** Change Type<br>**Scenario:** สลับ `int` $\leftrightarrow$ `long` | **Failure**<br>(Strict Type Check) | ❌ FAIL | Full Mode เข้มงวดมาก การเปลี่ยน Type (แม้จะ Compatible ขาเดียว) มักจะไม่ผ่านอีกขาหนึ่ง |
-| **FULL-05** | **Action:** Rename Field<br>**Scenario:** เปลี่ยนชื่อ `factory` เป็น `plant` | **Failure**<br>(Field Missing) | ❌ FAIL | Avro มองว่าคือการ "ลบ field เก่า" และ "เพิ่ม field ใหม่" พร้อมกัน ซึ่งมักจะติดเงื่อนไข Required Field |
+| **FULL-01** | **Action:** Add Optional Fields (v1 $\leftrightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (with default) | **Success**<br>(Bidirectional Safe) | ✅<br>PASS | ปลอดภัยทั้ง 2 ทาง: ขา Backward เติม Default, ขา Forward มองข้ามฟิลด์ |
+| **FULL-02** | **Action:** Remove Required Field (v2 $\leftrightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Failure**<br>(Fails Forward Check) | ❌<br>FAIL | พังที่ขา **Forward** (เหมือน case F-02) ทำให้ไม่ผ่านเกณฑ์ Full Mode |
+| **FULL-03** | **Action:** Remove Optional Field<br>**Scenario:** ลบฟิลด์ `phone` (ที่มี Default null) | **Success**<br>(Bidirectional Safe) | ✅<br>PASS | หากลบฟิลด์ที่มี Default value จะถือว่าปลอดภัยทั้งสองทิศทาง |
+| **FULL-04** | **Action:** Change Type<br>**Scenario:** สลับ `int` $\leftrightarrow$ `float` | **Failure**<br>(Strict Type Check) | ❌<br>FAIL | **Updated:** แม้ Backward จะผ่าน (Int $\rightarrow$ Float) แต่ Forward ไม่ผ่าน (Float $\rightarrow$ Int) จึงสรุปว่า **FAIL** |
+| **FULL-05** | **Action:** Rename Field<br>**Scenario:** เปลี่ยนชื่อ `factory` เป็น `plant` | **Failure**<br>(Field Missing) | ❌<br>FAIL | Avro มองว่าคือการ "ลบ field เก่า" และ "เพิ่ม field ใหม่" พร้อมกัน ซึ่งมักจะติดเงื่อนไข Required Field |
 
 
 ### สรุปผลการทดลอง 
