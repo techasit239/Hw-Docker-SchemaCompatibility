@@ -31,11 +31,11 @@
 
 | ID | Action & Scenario | Expected result | Result status | Noted |
 | :--- | :--- | :--- | :---: | :--- |
-| **B-01** | **Action:** ลบฟิลด์ (Delete Field)**Scenario:** ลบฟิลด์ `ticket_total_value` ออก | **สำเร็จ**<br>(Consumer มองข้ามฟิลด์ที่หายไป) | ✅ PASS | Consumer ตัวใหม่จะมองข้ามฟิลด์ที่ถูกลบออกจาก Schema ไป แม้ว่าในข้อมูลเก่าจะมีฟิลด์นี้อยู่ก็ตาม |
-| **B-02** | **Action:** เพิ่มฟิลด์ (มี Default)**Scenario:** เพิ่มฟิลด์ `genre` พร้อมค่า Default | **สำเร็จ**<br>(เติมค่า Default อัตโนมัติ) | ✅ PASS | ข้อมูลเก่าไม่มีฟิลด์นี้ แต่ Consumer ตัวใหม่จะเติมค่า Default ให้เองอัตโนมัติตามที่กำหนดไว้ |
-| **B-03** | **Action:** เพิ่มฟิลด์ (ไม่มี Default)**Scenario:** เพิ่มฟิลด์ `director` โดยไม่ใส่ Default | **ล้มเหลว**<br>(Error 409 Conflict) | ❌ FAIL | Consumer ตัวใหม่พัง เพราะข้อมูลเก่าไม่มีฟิลด์นี้ส่งมา และไม่มีค่า Default ให้ดึงไปใช้ |
-| **B-04** | **Action:** เปลี่ยน Data Type (เข้ากันได้)**Scenario:** เปลี่ยน `int` เป็น `long` | **สำเร็จ**<br>(Type Promotion) | ✅ PASS | Avro อนุญาตให้เปลี่ยนจากเล็กไปใหญ่ (Int -> Long) ได้อย่างปลอดภัยในโหมด Backward |
-| **B-05** | **Action:** เปลี่ยน Data Type (เข้ากันไม่ได้**Scenario:** เปลี่ยน `int` เป็น `string` | **ล้มเหลว**<br>(Type Mismatch) | ❌ FAIL | Consumer ตัวใหม่ไม่สามารถแปลงตัวเลข (Int) เป็นข้อความ (String) ได้โดยตรงโดยไม่มี Logic เพิ่มเติม |
+| **B-01** | **Action:** ลบฟิลด์ (Delete Field)<br>**Scenario:** ลบฟิลด์ `ticket_total_value` ออก | **สำเร็จ**<br>(Consumer มองข้ามฟิลด์ที่หายไป) | ✅ PASS | Consumer ตัวใหม่จะมองข้ามฟิลด์ที่ถูกลบออกจาก Schema ไป แม้ว่าในข้อมูลเก่าจะมีฟิลด์นี้อยู่ก็ตาม |
+| **B-02** | **Action:** เพิ่มฟิลด์ (มี Default)<br>**Scenario:** เพิ่มฟิลด์ `genre` พร้อมค่า Default | **สำเร็จ**<br>(เติมค่า Default อัตโนมัติ) | ✅ PASS | ข้อมูลเก่าไม่มีฟิลด์นี้ แต่ Consumer ตัวใหม่จะเติมค่า Default ให้เองอัตโนมัติตามที่กำหนดไว้ |
+| **B-03** | **Action:** เพิ่มฟิลด์ (ไม่มี Default)<br>**Scenario:** เพิ่มฟิลด์ `director` โดยไม่ใส่ Default | **ล้มเหลว**<br>(Error 409 Conflict) | ❌ FAIL | Consumer ตัวใหม่พัง เพราะข้อมูลเก่าไม่มีฟิลด์นี้ส่งมา และไม่มีค่า Default ให้ดึงไปใช้ |
+| **B-04** | **Action:** เปลี่ยน Data Type (เข้ากันได้)<br>**Scenario:** เปลี่ยน `int` เป็น `long` | **สำเร็จ**<br>(Type Promotion) | ✅ PASS | Avro อนุญาตให้เปลี่ยนจากเล็กไปใหญ่ (Int -> Long) ได้อย่างปลอดภัยในโหมด Backward |
+| **B-05** | **Action:** เปลี่ยน Data Type (เข้ากันไม่ได้)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **ล้มเหลว**<br>(Type Mismatch) | ❌ FAIL | Consumer ตัวใหม่ไม่สามารถแปลงตัวเลข (Int) เป็นข้อความ (String) ได้โดยตรงโดยไม่มี Logic เพิ่มเติม |
 
 
 ### ผลการทดลอง
