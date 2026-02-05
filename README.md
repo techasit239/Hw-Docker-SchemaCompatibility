@@ -39,11 +39,11 @@
 **Experiment details:**
 | ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
-| **B-01** | **Action:** Add Optional Fields (v1 $\rightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (Default=null) | **Success**<br>(Auto-fill default) | ✅ PASS | Consumer v2 เติมค่า `null` ให้กับข้อมูล v1 ที่ไม่มีฟิลด์เหล่านี้ได้อัตโนมัติ |
-| **B-02** | **Action:** Remove Field (v2 $\rightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Success**<br>(Ignore field) | ✅ PASS | Consumer v3 มองข้ามฟิลด์ `dropoff_point` ที่ติดมากับข้อมูลเก่า (v2) ได้ |
-| **B-03** | **Action:** Add Required Field (No Default)<br>**Scenario:** เพิ่มฟิลด์ `citizen_id` **โดยไม่ใส่ Default** | **Failure**<br>(Error 409) | ❌ FAIL | Consumer ใหม่พังทันที เพราะข้อมูลเก่าไม่มีค่านี้ส่งมาและไม่มี Default ให้ใช้ |
-| **B-04** | **Action:** Change Type (Compatible)<br>**Scenario:** เปลี่ยน `int` เป็น `long` | **Success**<br>(Type Promotion) | ✅ PASS | Avro อนุญาตให้เปลี่ยน Type จากเล็กไปใหญ่ (Int $\rightarrow$ Long) ได้ในโหมดนี้ |
-| **B-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌ FAIL | ไม่สามารถแปลงตัวเลขเป็นข้อความได้โดยตรง Consumer จะ Error |
+| **B-01** | **Action:** Add Optional Fields (v1 $\rightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (Default=null) | **Success**<br>(Auto-fill default) | ✅<br>PASS | Consumer v2 เติมค่า `null` ให้กับข้อมูล v1 ที่ไม่มีฟิลด์เหล่านี้ได้อัตโนมัติ |
+| **B-02** | **Action:** Remove Field (v2 $\rightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Success**<br>(Ignore field) | ✅<br>PASS | Consumer v3 มองข้ามฟิลด์ `dropoff_point` ที่ติดมากับข้อมูลเก่า (v2) ได้ |
+| **B-03** | **Action:** Add Required Field (No Default)<br>**Scenario:** เพิ่มฟิลด์ `citizen_id` **โดยไม่ใส่ Default** | **Failure**<br>(Error 409) | ❌<br>FAIL | Consumer ใหม่พังทันที เพราะข้อมูลเก่าไม่มีค่านี้ส่งมาและไม่มี Default ให้ใช้ |
+| **B-04** | **Action:** Change Type (Compatible)<br>**Scenario:** เปลี่ยน `int` เป็น `long` | **Success**<br>(Type Promotion) | ✅<br>PASS | Avro อนุญาตให้เปลี่ยน Type จากเล็กไปใหญ่ (Int $\rightarrow$ Long) ได้ในโหมดนี้ |
+| **B-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | ไม่สามารถแปลงตัวเลขเป็นข้อความได้โดยตรง Consumer จะ Error |
 
 
 ### สรุปผลการทดลอง
