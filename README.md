@@ -74,12 +74,16 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 <img width="464" height="93" alt="{2C0D72F0-9ABD-4C99-AEA7-349CFF2BA71F}" src="https://github.com/user-attachments/assets/92c3513c-eea5-4de8-bac1-ae33e9a09996" />
 <img width="474" height="81" alt="{7C205736-5177-48BE-A573-19EA29C5DC65}" src="https://github.com/user-attachments/assets/61fa5d44-1ef0-421d-abcf-a13dc7a0cd9f" />
 
+<br>
+สำหรับการทดลอง B-04 เมื่อทำการเปลี่ยน data type (factory) แบบที่ยังเป็น type ตัวเลขเหมือนกัน แต่เปลี่ยนจาก int เป็น float พบว่า Consumer เวอร์ชั่นใหม่ที่รับค่าเป็น float ยังคงสามารถอ่านค่าจากเวอร์ชั่นเก่าที่เป็น int ได้ (50 --> 50.0)เนื่องจาก float มีความละเอียดเชิงตัวเลขจากทศนิยมมากกว่า int จึงไม่มีผลในแง่ของความแม่นยำ
+<br>
+<img width="462" height="62" alt="{D94C026A-6E87-41FC-B5E1-5C04EB71FA37}" src="https://github.com/user-attachments/assets/26d8e099-f139-4326-bda4-1b077299ff80" />
+<img width="469" height="58" alt="image" src="https://github.com/user-attachments/assets/b6f0669c-5eec-4b8f-9b56-d33ef0c0c949" />
+<br>
 
 
 
 
-
- 
 ## 6.2 โหมด Forward (Forward compatibility)
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวเก่า** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวใหม่** ได้หรือไม่
