@@ -54,7 +54,7 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวเก่า** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวใหม่** ได้หรือไม่
 
- | ID | การกระทำ & สถานการณ์จำลอง | ผลลัพธ์ที่คาดหวัง | สถานะ | หมายเหตุ |
+| ID | Action & Scenario | Expected result | Result status | Noted |
 | :--- | :--- | :--- | :---: | :--- |
 | **F-01** | **Action:** เพิ่มฟิลด์ (Add Field)<br>**Scenario:** เพิ่มฟิลด์ `cinema_hall` เข้าไป | **สำเร็จ**<br>(มองข้ามฟิลด์ที่ไม่รู้จัก) | ✅ PASS | Consumer ตัวเก่าไม่รู้จักฟิลด์ `cinema_hall` จึงทำการมองข้ามข้อมูลส่วนเกินนี้ไป ไม่นำมาประมวลผล |
 | **F-02** | **Action:** ลบฟิลด์ (มี Default)<br>**Scenario:** ลบฟิลด์ที่มีค่า Default อยู่แล้ว | **สำเร็จ**<br>(ใช้ค่า Default เดิม) | ✅ PASS | Consumer ตัวเก่าต้องการฟิลด์นี้แต่ข้อมูลใหม่ไม่ส่งมา มันจึงไปดึงค่า Default ใน Schema ของตัวเองมาใช้แทน |
@@ -81,7 +81,7 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
 **Objective:** ตรวจสอบความเข้ากันได้ **ทั้งสองทิศทาง** (ปลอดภัยที่สุด upgradeฝั่งไหนก่อนก็ได้)
 
-| ID | การกระทำ & สถานการณ์จำลอง | ผลลัพธ์ที่คาดหวัง | สถานะ | หมายเหตุ |
+| ID | Action & Scenario | Expected result | Result status | Noted |
 | :--- | :--- | :--- | :---: | :--- |
 | **FULL-01** | **Action:** เพิ่มฟิลด์ (มี Default)<br>**Scenario:** เพิ่ม `discount_code` พร้อม Default | **สำเร็จ**<br>(ปลอดภัยทั้ง 2 ทาง) | ✅ PASS | ทำงานได้ทั้งขา Backward (เติมค่า Default) และ Forward (มองข้ามฟิลด์) |
 | **FULL-02** | **Action:** ลบฟิลด์ (มี Default)<br>**Scenario:** ลบฟิลด์ `genre` ออก | **สำเร็จ**<br>(ปลอดภัยทั้ง 2 ทาง) | ✅ PASS | ทำงานได้ทั้งสองทิศทางตราบใดที่ฟิลด์นั้นมีค่า Default กำกับไว้ |
