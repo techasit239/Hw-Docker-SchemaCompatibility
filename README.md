@@ -1,5 +1,5 @@
 # Hw-Docker-SchemaCompatibility
-# การปรับเปลี่ยนโครงสร้างข้อมูล (Schema Evolution) สำหรับระบบคิวรถรับส่งพนักงาน กรณีศึกษาการเพิ่มข้อมูลประกันภัยและการติดต่อภายใต้โหมดความเข้ากันได้ของ Schema Registry    
+# การปรับเปลี่ยนโครงสร้างข้อมูล (Schema Evolution) สำหรับระบบคิวรถรับส่งพนักงาน กรณีศึกษาการเพิ่มข้อมูลประกันภัยและการติดต่อภายใต้โหมดความเข้ากันได้ของ Schema Registry     
 
 ## ภาพรวม (Overview)
 การศึกษานี้มุ่งสาธิตกระบวนการปรับเปลี่ยนโครงสร้างข้อมูล (Schema Evolution) ของข้อมูลพนักงานที่ใช้ในระบบบริหารจัดการคิวรถรับส่งพนักงาน โดยใช้ Apache Kafka ร่วมกับ Confluent Schema Registry เป็นแกนกลางของการจัดการความเข้ากันได้ของข้อมูล การทดลองเปรียบเทียบโหมดความเข้ากันได้แบบ Backward Forward และ Full เพื่อประเมินผลกระทบของการเปลี่ยนแปลงโครงสร้างข้อมูลต่อการทำงานร่วมกันระหว่างผู้ส่งข้อมูล (Producer) และผู้รับข้อมูล (Consumer) 
@@ -81,6 +81,12 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 <img width="469" height="58" alt="image" src="https://github.com/user-attachments/assets/b6f0669c-5eec-4b8f-9b56-d33ef0c0c949" />
 <br>
 
+<br>
+สำหรับการทดลอง B-05 เมื่อทำการเปลี่ยน data type (factory) แต่คราวนี้เปลี่ยนจาก ตัวเลข ที่เป็น int เป็น string เลย พบว่า Consumer เวอร์ชั่นใหม่ที่รับค่าเป็น string จะ Error เนื่องจากไม่สามารถรับค่าที่เป็นตัวเลขแล้วมาแปลงเป็น string ที่หน้าตาเหมือนตัวเลขได้โดยตรง เพราะเป็น data type ที่ต่างชนิดกันอย่างสิ้นเชิง
+<br>
+<img width="460" height="56" alt="{4D155383-1886-4BE9-85F3-9F89732869FC}" src="https://github.com/user-attachments/assets/a2a5deed-e009-4dc9-9082-7e4ed5bee534" />
+<img width="464" height="35" alt="{AA3B23AE-EA3D-4F3B-8BDB-B8A0512B96A8}" src="https://github.com/user-attachments/assets/25a12ed7-8e43-4d28-a76b-66a065838e27" />
+<br>
 
 
 
