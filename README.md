@@ -61,13 +61,13 @@
  
 
 ### สรุปผลการทดลอง
- จากการทดลองแบบที่ **B-03** พบว่าเมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
+ จากการทดลองแบบที่ **B-03** พบว่าเมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด 
 READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 
 <img width="809" height="278" alt="image" src="https://github.com/user-attachments/assets/5bf02240-b02a-4e27-9f6f-d9d5b7edf056" />
 
  
-สำหรับการทดลอง B-01 ใน Backward mode การเพิ่มฟิลด์ใหม่ต้องกำหนดให้เป็น Optional หรือมี Default value เสมอ เพื่อให้ Consumer เวอร์ชันใหม่สามารถอ่านข้อความย้อนหลังได้อย่างปลอดภัย
+สำหรับการทดลอง **B-01** ใน Backward mode การเพิ่มฟิลด์ใหม่ต้องกำหนดให้เป็น Optional หรือมี Default value เสมอ เพื่อให้ Consumer เวอร์ชันใหม่สามารถอ่านข้อความย้อนหลังได้อย่างปลอดภัย
 
 <img width="940" height="45" alt="image" src="https://github.com/user-attachments/assets/705e32c9-95ac-495f-94e2-2aba1730a21b" />
 <img width="940" height="54" alt="image" src="https://github.com/user-attachments/assets/9647ef09-cacc-4885-9508-2a53398d8708" />
