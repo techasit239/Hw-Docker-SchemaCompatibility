@@ -164,6 +164,10 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 | **FULL-04** | **Action:** Change Type<br>**Scenario:** สลับ `int` $\leftrightarrow$ `float` | **Failure**<br>(Strict Type Check) | ❌<br>FAIL | **Updated:** แม้ Backward จะผ่าน (Int $\rightarrow$ Float) แต่ Forward ไม่ผ่าน (Float $\rightarrow$ Int) จึงสรุปว่า **FAIL** |
 | **FULL-05** | **Action:** Rename Field<br>**Scenario:** เปลี่ยนชื่อ `factory` เป็น `plant` | **Failure**<br>(Field Missing) | ❌<br>FAIL | Avro มองว่าคือการ "ลบ field เก่า" และ "เพิ่ม field ใหม่" พร้อมกัน ซึ่งมักจะติดเงื่อนไข Required Field |
 
+ในการใช้โหมด Full เราสามารถเพิ่ม field ใหม่ได้ โดยมีค่า Default ให้ 
+แต่ใน Full-03, FULL-03 ในการทดลอง พบว่า ไม่สามารถลบ Field ที่มีอยู่เดิมได้ หาก field นั้นๆ ไม่มีการ Set ค่า Default ไว้ได้ โดยหากลบจะให้ผลตามภาพ แต่หาก Field ดังกล่าว มีค่า Default สามารถ remove field นั้นออกได้
+<img width="881" height="804" alt="image" src="https://github.com/user-attachments/assets/2efcac2f-4107-450c-9821-0dd809d58593" />
+ในการเปลี่ยน Data Type ไม่สามารถเปลี่ยนจาก Data type ใด data type หนึ่ง เป็นอีก data type ได้เลย โดยทดลองทั้ง string >> float/int, int >> string/float และ float >> string/int 
 
 ### สรุปผลการทดลอง 
 การเพิ่มฟิลด์ใหม่แบบ Optional ที่มี Default value ได้รับการยอมรับ อย่างไรก็ตาม การเปลี่ยนชนิดข้อมูลของฟิลด์เดิมถูกปฏิเสธโดย Schema Registry พร้อมข้อผิดพลาด TYPE_MISMATCH ในทั้งสองทิศทาง (reader และ writer)
@@ -171,5 +175,5 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 <img width="940" height="286" alt="image" src="https://github.com/user-attachments/assets/11f13ff8-5551-45a7-a8ab-f2319c632b78" />
 
 
-Full mode เป็นโหมดที่เข้มงวดที่สุด เหมาะสำหรับระบบ Production ที่ Producer และ Consumer อัปเกรดไม่พร้อมกัน โดยอนุญาตเฉพาะการเปลี่ยนแปลงที่ไม่ก่อให้เกิด Breaking changes
+Full mode เป็นโหมดที่เข้มงวดที่สุด เหมาะสำหรับระบบ Production ที่ Producer และ Consumer อัปเกรดไม่พร้อมกัน โดยอนุญาตเฉพาะการเปลี่ยนแปลงที่ไม่ก่อให้เกิด Breaking changes ข้อดีของ FULL คือ การเกิด Error จาก Data type หรือ field หาย จะไม่มีเลย
 
