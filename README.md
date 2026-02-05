@@ -168,9 +168,9 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
 
 ในการใช้โหมด Full เราสามารถเพิ่ม field ใหม่ได้ โดยมีค่า Default ให้   
-แต่ในการทดลอง Full-02 และ FULL-03 พบว่า ไม่สามารถลบ Field ที่มีอยู่เดิมได้ หาก field นั้นๆ ไม่มีการ Set ค่า Default ไว้ได้ แต่หาก Field ดังกล่าว มีค่า Default สามารถ remove field นั้นออกได้
-<img width="881" height="804" alt="image" src="https://github.com/user-attachments/assets/2efcac2f-4107-450c-9821-0dd809d58593" />
-ในการเปลี่ยน Data Type ไม่สามารถเปลี่ยนจาก Data type ใด data type หนึ่ง เป็นอีก data type ได้เลย โดยทดลองทั้ง string >> float/int, int >> string/float และ float >> string/int 
+แต่ในการทดลอง Full-02 และ FULL-03 พบว่า ไม่สามารถลบ Field ที่มีอยู่เดิมได้ หาก field นั้นๆ ไม่มีการ Set ค่า Default ไว้ได้ แต่หาก Field ดังกล่าว มีค่า Default สามารถ remove field นั้นออกได้  
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/2efcac2f-4107-450c-9821-0dd809d58593" />  
+ในการเปลี่ยน Data Type ไม่สามารถเปลี่ยนจาก Data type ใด data type หนึ่ง เป็นอีก data type ได้เลย โดยทดลองทั้ง string >> float/int, int >> string/float และ float >> string/int  
 
 ### สรุปผลการทดลอง 
 การเพิ่มฟิลด์ใหม่แบบ Optional ที่มี Default value ได้รับการยอมรับ อย่างไรก็ตาม การเปลี่ยนชนิดข้อมูลของฟิลด์เดิมถูกปฏิเสธโดย Schema Registry พร้อมข้อผิดพลาด TYPE_MISMATCH ในทั้งสองทิศทาง (reader และ writer)
