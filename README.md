@@ -35,15 +35,15 @@
 ### 6.1 โหมด Backward (Backward compatibility)
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
-
+<br>
 **Experiment details:**
-| ID | Action & Scenario | Expected result | Result status | Noted |
+| ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
-| **B-01** | **Action:** ลบฟิลด์ (Delete Field)<br>**Scenario:** ลบฟิลด์ `ticket_total_value` ออก | **สำเร็จ**<br>(Consumer มองข้ามฟิลด์ที่หายไป) | ✅ PASS | Consumer ตัวใหม่จะมองข้ามฟิลด์ที่ถูกลบออกจาก Schema ไป แม้ว่าในข้อมูลเก่าจะมีฟิลด์นี้อยู่ก็ตาม |
-| **B-02** | **Action:** เพิ่มฟิลด์ (มี Default)<br>**Scenario:** เพิ่มฟิลด์ `genre` พร้อมค่า Default | **สำเร็จ**<br>(เติมค่า Default อัตโนมัติ) | ✅ PASS | ข้อมูลเก่าไม่มีฟิลด์นี้ แต่ Consumer ตัวใหม่จะเติมค่า Default ให้เองอัตโนมัติตามที่กำหนดไว้ |
-| **B-03** | **Action:** เพิ่มฟิลด์ (ไม่มี Default)<br>**Scenario:** เพิ่มฟิลด์ `director` โดยไม่ใส่ Default | **ล้มเหลว**<br>(Error 409 Conflict) | ❌ FAIL | Consumer ตัวใหม่พัง เพราะข้อมูลเก่าไม่มีฟิลด์นี้ส่งมา และไม่มีค่า Default ให้ดึงไปใช้ |
-| **B-04** | **Action:** เปลี่ยน Data Type (เข้ากันได้)<br>**Scenario:** เปลี่ยน `int` เป็น `long` | **สำเร็จ**<br>(Type Promotion) | ✅ PASS | Avro อนุญาตให้เปลี่ยนจากเล็กไปใหญ่ (Int -> Long) ได้อย่างปลอดภัยในโหมด Backward |
-| **B-05** | **Action:** เปลี่ยน Data Type (เข้ากันไม่ได้)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **ล้มเหลว**<br>(Type Mismatch) | ❌ FAIL | Consumer ตัวใหม่ไม่สามารถแปลงตัวเลข (Int) เป็นข้อความ (String) ได้โดยตรงโดยไม่มี Logic เพิ่มเติม |
+| **B-01** | **Action:** Add Optional Fields (v1 $\rightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (Default=null) | **Success**<br>(Auto-fill default) | ✅ PASS | Consumer v2 เติมค่า `null` ให้กับข้อมูล v1 ที่ไม่มีฟิลด์เหล่านี้ได้อัตโนมัติ |
+| **B-02** | **Action:** Remove Field (v2 $\rightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Success**<br>(Ignore field) | ✅ PASS | Consumer v3 มองข้ามฟิลด์ `dropoff_point` ที่ติดมากับข้อมูลเก่า (v2) ได้ |
+| **B-03** | **Action:** Add Required Field (No Default)<br>**Scenario:** เพิ่มฟิลด์ `citizen_id` **โดยไม่ใส่ Default** | **Failure**<br>(Error 409) | ❌ FAIL | Consumer ใหม่พังทันที เพราะข้อมูลเก่าไม่มีค่านี้ส่งมาและไม่มี Default ให้ใช้ |
+| **B-04** | **Action:** Change Type (Compatible)<br>**Scenario:** เปลี่ยน `int` เป็น `long` | **Success**<br>(Type Promotion) | ✅ PASS | Avro อนุญาตให้เปลี่ยน Type จากเล็กไปใหญ่ (Int $\rightarrow$ Long) ได้ในโหมดนี้ |
+| **B-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌ FAIL | ไม่สามารถแปลงตัวเลขเป็นข้อความได้โดยตรง Consumer จะ Error |
 
 
 ### สรุปผลการทดลอง
@@ -62,15 +62,15 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 ## 6.2 โหมด Forward (Forward compatibility)
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวเก่า** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวใหม่** ได้หรือไม่
-
+<br>
 **Experiment details:**
-| ID | Action & Scenario | Expected result | Result status | Noted |
+| ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
-| **F-01** | **Action:** เพิ่มฟิลด์ (Add Field)<br>**Scenario:** เพิ่มฟิลด์ `cinema_hall` เข้าไป | **สำเร็จ**<br>(มองข้ามฟิลด์ที่ไม่รู้จัก) | ✅ PASS | Consumer ตัวเก่าไม่รู้จักฟิลด์ `cinema_hall` จึงทำการมองข้ามข้อมูลส่วนเกินนี้ไป ไม่นำมาประมวลผล |
-| **F-02** | **Action:** ลบฟิลด์ (มี Default)<br>**Scenario:** ลบฟิลด์ที่มีค่า Default อยู่แล้ว | **สำเร็จ**<br>(ใช้ค่า Default เดิม) | ✅ PASS | Consumer ตัวเก่าต้องการฟิลด์นี้แต่ข้อมูลใหม่ไม่ส่งมา มันจึงไปดึงค่า Default ใน Schema ของตัวเองมาใช้แทน |
-| **F-03** | **Action:** ลบฟิลด์ (ไม่มี Default)<br>**Scenario:** ลบฟิลด์บังคับ `title` ออก | **ล้มเหลว**<br>(ขาดฟิลด์บังคับ) | ❌ FAIL | Consumer ตัวเก่าพังทันที เพราะฟิลด์ที่จำเป็น (`Required field`) หายไปจากข้อมูลชุดใหม่ |
-| **F-04** | **Action:** เปลี่ยน Data Type (มีความเสี่ยง)<br>**Scenario:** เปลี่ยน `long` เป็น `int` | **ล้มเหลว**<br>(ข้อมูลอาจสูญหาย) | ❌ FAIL | การส่งค่า Long (ตัวเลขขนาดใหญ่) ไปให้ Consumer ที่รอรับ Int (ขนาดเล็ก) อาจทำให้ข้อมูลผิดพลาดหรือล้น (Overflow) |
-| **F-05** | **Action:** เปลี่ยน Data Type (เข้ากันไม่ได้)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **ล้มเหลว**<br>(Type Mismatch) | ❌ FAIL | Consumer ตัวเก่าคาดหวังตัวเลข (`int`) แต่ได้รับข้อความ (`string`) ทำให้เกิด Error ในการถอดรหัสข้อมูล |
+| **F-01** | **Action:** Add Optional Fields (v1 $\rightarrow$ v2)<br>**Scenario:** ส่งข้อมูล v2 (มี `phone`) ให้ Consumer v1 | **Success**<br>(Ignore unknown) | ✅ PASS | Consumer v1 ไม่รู้จักฟิลด์ใหม่ จึงมองข้ามไปและอ่านข้อมูลส่วนที่เหลือได้ |
+| **F-02** | **Action:** Remove Required Field (v2 $\rightarrow$ v3)<br>**Scenario:** ส่งข้อมูล v3 (ไม่มี `dropoff_point`) ให้ Consumer v2 | **Failure**<br>(Missing Required) | ❌ FAIL | **Breaking Change!** Consumer v2 จำเป็นต้องใช้ `dropoff_point` เมื่อ v3 ไม่ส่งมาให้ ระบบจึงล่ม |
+| **F-03** | **Action:** Delete Field (with Default)<br>**Scenario:** ลบฟิลด์ที่มี Default ใน Schema เก่า | **Success**<br>(Use Local Default) | ✅ PASS | Consumer เก่าจะดึงค่า Default ในเครื่องตัวเองมาใช้แทนค่าที่หายไป |
+| **F-04** | **Action:** Change Type (Risk)<br>**Scenario:** เปลี่ยน `long` เป็น `int` | **Failure**<br>(Potential Data Loss) | ❌ FAIL | การส่งข้อมูลใหม่ (Long) ให้ Consumer เก่า (Int) อาจทำให้ข้อมูลล้น (Overflow) |
+| **F-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌ FAIL | Consumer เก่าคาดหวังตัวเลข แต่ได้รับข้อความ อ่านไม่ออกแน่นอน |
 
 
 ### สรุปผลการทดลอง
@@ -90,15 +90,15 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 ## 6.3 โหมด Full (Full mode)
 
 **Objective:** ตรวจสอบความเข้ากันได้ **ทั้งสองทิศทาง** (ปลอดภัยที่สุด upgradeฝั่งไหนก่อนก็ได้)
-
+<br>
 **Experiment details:**
-| ID | Action & Scenario | Expected result | Result status | Noted |
+| ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
-| **FULL-01** | **Action:** เพิ่มฟิลด์ (มี Default)<br>**Scenario:** เพิ่ม `discount_code` พร้อม Default | **สำเร็จ**<br>(ปลอดภัยทั้ง 2 ทาง) | ✅ PASS | ทำงานได้ทั้งขา Backward (เติมค่า Default) และ Forward (มองข้ามฟิลด์) |
-| **FULL-02** | **Action:** ลบฟิลด์ (มี Default)<br>**Scenario:** ลบฟิลด์ `genre` ออก | **สำเร็จ**<br>(ปลอดภัยทั้ง 2 ทาง) | ✅ PASS | ทำงานได้ทั้งสองทิศทางตราบใดที่ฟิลด์นั้นมีค่า Default กำกับไว้ |
-| **FULL-03** | **Action:** เพิ่มฟิลด์ (ไม่มี Default)<br>**Scenario:** เพิ่มฟิลด์ใหม่โดยไม่ใส่ Default | **ล้มเหลว**<br>(พังในขา Backward) | ❌ FAIL | ล้มเหลวเพราะ Consumer ตัวใหม่จะไม่สามารถอ่านข้อมูลเก่าได้ (ขาดฟิลด์) |
-| **FULL-04** | **Action:** ลบฟิลด์ (ไม่มี Default)<br>**Scenario:** ลบฟิลด์บังคับออก | **ล้มเหลว**<br>(พังในขา Forward) | ❌ FAIL | ล้มเหลวเพราะ Consumer ตัวเก่าจะไม่สามารถอ่านข้อมูลใหม่ได้ (ขาดฟิลด์บังคับ) |
-| **FULL-05** | **Action:** เปลี่ยน Data Type<br>**Scenario:** สลับ `int` <-> `long` | **ล้มเหลว**<br>(เข้มงวดมาก) | ❌ FAIL | ล้มเหลวในขาใดขาหนึ่งเสมอ (เช่น Long -> Int จะพังในขา Forward) จึงถือว่าไม่ผ่าน Full Mode |
+| **FULL-01** | **Action:** Add Optional Fields (v1 $\leftrightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (with default) | **Success**<br>(Bidirectional Safe) | ✅ PASS | ปลอดภัยทั้ง 2 ทาง: ขา Backward เติม Default, ขา Forward มองข้ามฟิลด์ |
+| **FULL-02** | **Action:** Remove Required Field (v2 $\leftrightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Failure**<br>(Fails Forward Check) | ❌ FAIL | พังที่ขา **Forward** (เหมือน case F-02) ทำให้ไม่ผ่านเกณฑ์ Full Mode |
+| **FULL-03** | **Action:** Remove Optional Field<br>**Scenario:** ลบฟิลด์ `phone` (ที่มี Default null) | **Success**<br>(Bidirectional Safe) | ✅ PASS | หากลบฟิลด์ที่มี Default value จะถือว่าปลอดภัยทั้งสองทิศทาง |
+| **FULL-04** | **Action:** Change Type<br>**Scenario:** สลับ `int` $\leftrightarrow$ `long` | **Failure**<br>(Strict Type Check) | ❌ FAIL | Full Mode เข้มงวดมาก การเปลี่ยน Type (แม้จะ Compatible ขาเดียว) มักจะไม่ผ่านอีกขาหนึ่ง |
+| **FULL-05** | **Action:** Rename Field<br>**Scenario:** เปลี่ยนชื่อ `factory` เป็น `plant` | **Failure**<br>(Field Missing) | ❌ FAIL | Avro มองว่าคือการ "ลบ field เก่า" และ "เพิ่ม field ใหม่" พร้อมกัน ซึ่งมักจะติดเงื่อนไข Required Field |
 
 
 ### สรุปผลการทดลอง 
