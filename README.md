@@ -41,7 +41,7 @@
 <br>
 <br>
 ## ผลการทดลอง (Experimental results)
-### 6.1 โหมด Backward (Backward compatibility)
+### 6.1 โหมด Backward (Backward compatibility) ###
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
 <br>
