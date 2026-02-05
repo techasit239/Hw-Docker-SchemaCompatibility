@@ -123,8 +123,8 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
  ในการทดลอง F-02 พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ dropoff_point ไม่สามารถอ่านข้อความจาก Producer เวอร์ชั่นใหม่ที่ไม่มี dropoff_point ได้ เนื่องจากเป็นฟิลด์ที่ไม่ได้กำหนดค่า Default หรือ ก็คือ required field ทำให้ Consumer เวอร์ชั่นเก่าที่ต้องการค่าจาก dropoff_point ไม่สามารถอ่านค่าได้ จึงเกิด Error
 <br>
 <img width="467" height="56" alt="{70843EAC-6D58-4292-A878-0FEF17D024A7}" src="https://github.com/user-attachments/assets/6ac828fc-097c-40ed-abf7-eaee4268a217" />
-<img width="471" height="34" alt="{7D57423A-F009-46B1-8663-111DBFA13E41}" src="https://github.com/user-attachments/assets/373a3454-1ae0-404e-8e25-1765cc49a9cc" />
-
+<img width="ึ707" height="51" alt="{7D57423A-F009-46B1-8663-111DBFA13E41}" src="https://github.com/user-attachments/assets/373a3454-1ae0-404e-8e25-1765cc49a9cc" />
+<br> 
 
 
 
