@@ -24,11 +24,17 @@
 3.	การเปลี่ยนแปลงใดบ้างที่ถูกยอมรับหรือถูกปฏิเสธภายใต้โหมด Full
 
 **Schema Evolution** โดยอ้างอิงจาก Logic ของระบบรถรับส่งพนักงาน (Employee Shuttle) ที่มีการปรับเปลี่ยนโครงสร้างข้อมูลจริงใน 3 เวอร์ชัน:
+## 📊 Visualizing Schema Evolution (ภาพรวมการเปลี่ยนแปลง)
+
+ตารางนี้แสดงลำดับการเปลี่ยนแปลงโครงสร้างข้อมูล (Schema) ในแต่ละเวอร์ชันของการทดลอง:
 | Version | Changes (การเปลี่ยนแปลง) | Schema Definition (โครงสร้างข้อมูล) |
 | :--- | :--- | :--- |
-| **v1 (Base)** | - | `full_name`, `factory`, `position`, `dropoff_point` |
-| **v2 (Add Field)** | **+Add:** `insurance`, `phone` | `full_name`, `factory`, `position`, `dropoff_point`, `insurance`*, `phone`*<br>*(Nullable & Default=null)* |
-| **v3 (Remove Field)** | **-Remove:** `dropoff_point` | `full_name`, `factory`, `position`, `insurance`*, `phone`* |
+| **v1 (Base)** | - | `full_name`, `factory` (string), `position`, `dropoff_point` |
+| **v2 (Add Field)** | **+Add:** `insurance`, `phone`<br>*(Backward Compatible)* | `full_name`, `factory`, `position`, `dropoff_point`, `insurance`*, `phone`*<br>*(Nullable & Default=null)* |
+| **v3 (Remove Field)** | **-Remove:** `dropoff_point`<br>*(Forward Incompatible)* | `full_name`, `factory`, `position`, `insurance`*, `phone`*<br>*(ฟิลด์ dropoff_point หายไป)* |
+| **v4 (Type Change)** | **Change:** `factory` (String $\to$ Long)<br>*(Extra: Test Type Promotion)* | `full_name`, **`factory` (Long)**, `position`, `dropoff_point` |
+| **v5 (Type Mismatch)** | **Change:** `factory` (String $\to$ Int)<br>*(Extra: Test Incompatible Type)* | `full_name`, **`factory` (Int)**, `position`, `dropoff_point` |
+| **v6 (Add Required)** | **+Add:** `citizen_id`<br>*(Extra: Breaking Change)* | `full_name`, `factory`, `position`, `dropoff_point`, **`citizen_id`**<br>*(Required Field - No Default Value)* |
 <br>
 
 ## ผลการทดลอง (Experimental results)
@@ -48,16 +54,18 @@
 
 
 ### สรุปผลการทดลอง
-เมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
+ จากการทดลองแบบที่ B-03 พบว่าเมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
 READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 
 <img width="809" height="278" alt="image" src="https://github.com/user-attachments/assets/5bf02240-b02a-4e27-9f6f-d9d5b7edf056" />
 
  
-ใน Backward mode การเพิ่มฟิลด์ใหม่ต้องกำหนดให้เป็น Optional หรือมี Default value เสมอ เพื่อให้ Consumer เวอร์ชันใหม่สามารถอ่านข้อความย้อนหลังได้อย่างปลอดภัย
+สำหรับการทดลอง B-01 ใน Backward mode การเพิ่มฟิลด์ใหม่ต้องกำหนดให้เป็น Optional หรือมี Default value เสมอ เพื่อให้ Consumer เวอร์ชันใหม่สามารถอ่านข้อความย้อนหลังได้อย่างปลอดภัย
 
 <img width="940" height="45" alt="image" src="https://github.com/user-attachments/assets/705e32c9-95ac-495f-94e2-2aba1730a21b" />
 <img width="940" height="54" alt="image" src="https://github.com/user-attachments/assets/9647ef09-cacc-4885-9508-2a53398d8708" />
+
+สำหรับการทดลอง B-02 เมื่อทำการลบฟีลด์ในเวอร์ชั่นใหม่พบว่า Consumer ยังคงสามารถอ่านเวอร์ชั่นเก่าที่ยังคงมีฟิลด์ได้ โดยเหมือนการมองข้ามว่าไม่เคยมีฟีลด์นั้น
 
  
 ## 6.2 โหมด Forward (Forward compatibility)
