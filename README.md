@@ -69,6 +69,9 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 <img width="940" height="54" alt="image" src="https://github.com/user-attachments/assets/9647ef09-cacc-4885-9508-2a53398d8708" />
 
 สำหรับการทดลอง B-02 เมื่อทำการลบฟีลด์ในเวอร์ชั่นใหม่พบว่า Consumer ยังคงสามารถอ่านเวอร์ชั่นเก่าที่ยังคงมีฟิลด์ได้ โดยเหมือนการมองข้ามว่าไม่เคยมีฟีลด์นั้น
+<img width="928" height="186" alt="{2C0D72F0-9ABD-4C99-AEA7-349CFF2BA71F}" src="https://github.com/user-attachments/assets/babee8af-5954-4bc0-b560-6679b159cc48" />
+
+
 
  
 ## 6.2 โหมด Forward (Forward compatibility)
