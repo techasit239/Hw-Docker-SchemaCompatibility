@@ -28,6 +28,7 @@
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
 
+**Experiment**
 | ID | Action & Scenario | Expected result | Result status | Noted |
 | :--- | :--- | :--- | :---: | :--- |
 | **B-01** | **Action:** ลบฟิลด์ (Delete Field)<br>**Scenario:** ลบฟิลด์ `ticket_total_value` ออก | **สำเร็จ**<br>(Consumer มองข้ามฟิลด์ที่หายไป) | ✅ PASS | Consumer ตัวใหม่จะมองข้ามฟิลด์ที่ถูกลบออกจาก Schema ไป แม้ว่าในข้อมูลเก่าจะมีฟิลด์นี้อยู่ก็ตาม |
@@ -54,6 +55,7 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวเก่า** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวใหม่** ได้หรือไม่
 
+**Experiment**
 | ID | Action & Scenario | Expected result | Result status | Noted |
 | :--- | :--- | :--- | :---: | :--- |
 | **F-01** | **Action:** เพิ่มฟิลด์ (Add Field)<br>**Scenario:** เพิ่มฟิลด์ `cinema_hall` เข้าไป | **สำเร็จ**<br>(มองข้ามฟิลด์ที่ไม่รู้จัก) | ✅ PASS | Consumer ตัวเก่าไม่รู้จักฟิลด์ `cinema_hall` จึงทำการมองข้ามข้อมูลส่วนเกินนี้ไป ไม่นำมาประมวลผล |
@@ -81,6 +83,7 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
 **Objective:** ตรวจสอบความเข้ากันได้ **ทั้งสองทิศทาง** (ปลอดภัยที่สุด upgradeฝั่งไหนก่อนก็ได้)
 
+**Experiment**
 | ID | Action & Scenario | Expected result | Result status | Noted |
 | :--- | :--- | :--- | :---: | :--- |
 | **FULL-01** | **Action:** เพิ่มฟิลด์ (มี Default)<br>**Scenario:** เพิ่ม `discount_code` พร้อม Default | **สำเร็จ**<br>(ปลอดภัยทั้ง 2 ทาง) | ✅ PASS | ทำงานได้ทั้งขา Backward (เติมค่า Default) และ Forward (มองข้ามฟิลด์) |
