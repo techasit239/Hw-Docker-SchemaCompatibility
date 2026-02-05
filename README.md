@@ -24,9 +24,17 @@
 3.	การเปลี่ยนแปลงใดบ้างที่ถูกยอมรับหรือถูกปฏิเสธภายใต้โหมด Full
 
 ## ผลการทดลอง (Experimental results)
-### 6.1 โหมด Backward (Backward mode)
-### พฤติกรรมที่คาดหวัง 
-การลงทะเบียน Schema เวอร์ชั่นใหม่จะสำเร็จ หากฟิลด์ที่เพิ่มเข้ามาใหม่สามารถรองรับข้อมูลเดิมได้ เช่น เป็นฟิลด์แบบ Optional และมีค่า Default
+### 6.1 โหมด Backward (Backward compatibility)
+**Objective:** Verify that the **new consumer** can read data produced with the **old schema**.
+
+| ID | Action | Scenario Description | Expected Result | Status | Note |
+| :--- | :--- | :--- | :--- | :---: | :--- |
+| **B-01** | Delete Field | Remove `ticket_total_value` field | **Success** | ✅ PASS | New consumer ignores the deleted field present in old data. |
+| **B-02** | Add Field (w/ Default) | Add `genre` field with default value | **Success** | ✅ PASS | New consumer fills in default value for missing field in old data. |
+| **B-03** | Add Field (No Default) | Add `director` field without default | **Failure** | ❌ FAIL | Error 409. New consumer cannot handle missing field without a default. |
+| **B-04** | Change Type (Compatible) | Change `int` to `long` | **Success** | ✅ PASS | Avro allows promotion from int to long. |
+| **B-05** | Change Type (Incompatible) | Change `int` to `string` | **Failure** | ❌ FAIL | Type mismatch. Cannot safely convert int to string in backward mode. |
+
 ### ผลการทดลอง
 เมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
 READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
@@ -40,7 +48,7 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 <img width="940" height="54" alt="image" src="https://github.com/user-attachments/assets/9647ef09-cacc-4885-9508-2a53398d8708" />
 
  
-## 6.2 โหมด Forward (Forward mode)
+## 6.2 โหมด Forward (Forward compatibility)
 ### พฤติกรรมที่คาดหวัง 
 Consumer เวอร์ชันเก่าต้องสามารถอ่านข้อความที่ถูกสร้างด้วย Schema เวอร์ชันใหม่ได้ โดยจะละเลยฟิลด์ที่ไม่รู้จัก
 ### ผลการทดลอง
