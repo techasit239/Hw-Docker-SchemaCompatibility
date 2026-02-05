@@ -29,11 +29,11 @@
 
 | ID | Action | Scenario Description | Expected Result | Status | Note |
 | :--- | :--- | :--- | :--- | :---: | :--- |
-| **B-01** |<br> Delete Field | Remove `ticket_total_value` field | **Success** | ✅ PASS | New consumer ignores the deleted field present in old data. |
-| **B-02** |<br> Add Field (w/ Default) | Add `genre` field with default value | **Success** | ✅ PASS | New consumer fills in default value for missing field in old data. |
-| **B-03** |<br> Add Field (No Default) | Add `director` field without default | **Failure** | ❌ FAIL | Error 409. New consumer cannot handle missing field without a default. |
-| **B-04** |<br> Change Type (Compatible) | Change `int` to `long` | **Success** | ✅ PASS | Avro allows promotion from int to long. |
-| **B-05** |<br> Change Type (Incompatible) | Change `int` to `string` | **Failure** | ❌ FAIL | Type mismatch. Cannot safely convert int to string in backward mode. |
+| **B-01**   | Delete Field | Remove `ticket_total_value` field | **Success** | ✅ PASS | New consumer ignores the deleted field present in old data. |
+| **B-02**   | Add Field (w/ Default) | Add `genre` field with default value | **Success** | ✅ PASS | New consumer fills in default value for missing field in old data. |
+| **B-03**   | Add Field (No Default) | Add `director` field without default | **Failure** | ❌ FAIL | Error 409. New consumer cannot handle missing field without a default. |
+| **B-04**   | Change Type (Compatible) | Change `int` to `long` | **Success** | ✅ PASS | Avro allows promotion from int to long. |
+| **B-05**   | Change Type (Incompatible) | Change `int` to `string` | **Failure** | ❌ FAIL | Type mismatch. Cannot safely convert int to string in backward mode. |
 
 ### ผลการทดลอง
 เมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
