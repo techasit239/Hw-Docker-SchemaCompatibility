@@ -24,12 +24,12 @@
 3.	การเปลี่ยนแปลงใดบ้างที่ถูกยอมรับหรือถูกปฏิเสธภายใต้โหมด Full
 
 **Schema Evolution** โดยอ้างอิงจาก Logic ของระบบรถรับส่งพนักงาน (Employee Shuttle) ที่มีการปรับเปลี่ยนโครงสร้างข้อมูลจริงใน 3 เวอร์ชัน:
-| Version | Changes | Schema Definition |
+| Version | Changes (การเปลี่ยนแปลง) | Schema Definition (โครงสร้างข้อมูล) |
 | :--- | :--- | :--- |
 | **v1 (Base)** | - | `full_name`, `factory`, `position`, `dropoff_point` |
-| **v2 (Add field)** | **+Add:** `insurance`, `phone` | `full_name`, `factory`, `position`, `dropoff_point`, `insurance`*, `phone`*<br>*(Nullable & Default=null)* |
-| **v3 (Remove field)** | **-Remove:** `dropoff_point` | `full_name`, `factory`, `position`, `insurance`*, `phone`* |
-
+| **v2 (Add Field)** | **+Add:** `insurance`, `phone` | `full_name`, `factory`, `position`, `dropoff_point`, `insurance`*, `phone`*<br>*(Nullable & Default=null)* |
+| **v3 (Remove Field)** | **-Remove:** `dropoff_point` | `full_name`, `factory`, `position`, `insurance`*, `phone`* |
+<br>
 
 ## ผลการทดลอง (Experimental results)
 ### 6.1 โหมด Backward (Backward compatibility)
