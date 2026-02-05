@@ -13,8 +13,8 @@
 อัปเกรด
 
 ## โจทย์และวัตถุประสงค์ (Problem statement) 
-ข้อมูลนำเข้า (Input) Avro Schema ตั้งต้น จำนวน 2 เวอร์ชันสำหรับ Kafka Topic เดียวกัน ได้แก่
-•	Employee Schema v1 : ชื่อ-นามสกุล (`full_name`), โรงงาน (`factory`), ตำแหน่ง (`position`), จุดลงรถ (`dropoff_point`)
+ข้อมูลนำเข้า (Input) Avro Schema ตั้งต้น จำนวน 2 เวอร์ชันสำหรับ Kafka Topic เดียวกัน ได้แก่<br>
+•	Employee Schema v1 : ชื่อ-นามสกุล (`full_name`), โรงงาน (`factory`), ตำแหน่ง (`position`), จุดลงรถ (`dropoff_point`)<br>
 •	Employee Schema v2 : เพิ่มข้อมูลประกันภัย (`insurance`) และ หมายเลขโทรศัพท์ (`phone`)
 ## วัตถุประสงค์ (Objective) 
 เพื่อประเมินพฤติกรรมของ Schema Registry ภายใต้โหมดความเข้ากันได้แบบ Backward, Forward และ Full โดยตรวจสอบว่า
