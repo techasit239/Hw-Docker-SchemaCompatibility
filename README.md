@@ -27,7 +27,7 @@
 
 ## 📊 Visualizing Schema Evolution (ภาพรวมการเปลี่ยนแปลง)
 
-ตารางนี้แสดงลำดับการเปลี่ยนแปลงโครงสร้างข้อมูล (Schema) ในแต่ละเวอร์ชันเพื่อใช้ทดสอบ Compatibility Mode:
+ตารางนี้แสดงลำดับการเปลี่ยนแปลงโครงสร้างข้อมูล (Schema) ในแต่ละเวอร์ชันเพื่อใช้ทดสอบ Compatibility Mode: 
 
 | Version | Changes (การเปลี่ยนแปลง) | Schema Definition (โครงสร้างข้อมูล) |
 | :--- | :--- | :--- |
@@ -131,12 +131,16 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 <br> 
 
 <br>
+
  ในการทดลอง **F-03** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ insurance และ phone โดยกำหนดค่า default ให้ (default=null) หรือ เป็น optional field ยังคงสามารถรับข้อความจาก Producer เวอร์ชั่นใหม่ซึ่งตัดฟิลด์ insurance และ phone ออกไปแล้วได้ โดยมันจะดึงค่า default ซึ่งคือ null ของเวอร์ชั่นตัวเองมาใช้แทนในฟิลด์ที่หายไปในเวอร์ชั่นใหม่<br>
 <img width="713" height="60" alt="{1343171C-B292-4F47-BCED-C0387C67D0B0}" src="https://github.com/user-attachments/assets/93a224cd-2dbc-4006-ad3b-1a188e005299" />
 <img width="ึ713" height="80" alt="{07BA5DF2-100B-43C2-9FD6-AC20C5E7C478}" src="https://github.com/user-attachments/assets/b96c7dbd-047a-49d2-b296-4d1d07238fc8" />
 
 <br>  
- 
+
+ ในการทดลอง **F-04** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่ฟิลด์ factory มี data type เป็น int ไม่สามารถรับข้อความที่ data type เป็น float ได้ (float --> int) เนื่องจาก float เป็นตัวเลขระดับทศนิยมซึ่งมีความละเอียดกว่า จึงทำให้มีโอกาสที่ข้อมูลปลายทางที่ consumer รับจะคลาดเคลื่อนในเชิงทศนิยมได้ จึงทำให้เกิด Error <br>
+<img width="464" height="57" alt="{05719A98-1D75-452A-92F5-52E5096ED64D}" src="https://github.com/user-attachments/assets/65940f3e-e2dd-4379-8310-6ba309052a44" />
+<img width="456" height="33" alt="{7AA119E1-4453-4CD9-9CBB-5D98E77E1A61}" src="https://github.com/user-attachments/assets/96fd0fec-9284-479f-a2cc-9fda4fe1ffff" />
 
 
 
