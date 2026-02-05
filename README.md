@@ -1,5 +1,5 @@
 # Hw-Docker-SchemaCompatibility 
-# การปรับเปลี่ยนโครงสร้างข้อมูล (Schema Evolution) สำหรับระบบคิวรถรับส่งพนักงาน กรณีศึกษาการเพิ่มข้อมูลประกันภัยและการติดต่อภายใต้โหมดความเข้ากันได้ของ Schema Registry       
+# การปรับเปลี่ยนโครงสร้างข้อมูล (Schema Evolution) สำหรับระบบคิวรถรับส่งพนักงาน กรณีศึกษาการเพิ่มข้อมูลประกันภัยและการติดต่อภายใต้โหมดความเข้ากันได้ของ Schema Registry        
 
 ## ภาพรวม (Overview)
 การศึกษานี้มุ่งสาธิตกระบวนการปรับเปลี่ยนโครงสร้างข้อมูล (Schema Evolution) ของข้อมูลพนักงานที่ใช้ในระบบบริหารจัดการคิวรถรับส่งพนักงาน โดยใช้ Apache Kafka ร่วมกับ Confluent Schema Registry เป็นแกนกลางของการจัดการความเข้ากันได้ของข้อมูล การทดลองเปรียบเทียบโหมดความเข้ากันได้แบบ Backward Forward และ Full เพื่อประเมินผลกระทบของการเปลี่ยนแปลงโครงสร้างข้อมูลต่อการทำงานร่วมกันระหว่างผู้ส่งข้อมูล (Producer) และผู้รับข้อมูล (Consumer) 
@@ -40,9 +40,10 @@
 | **v7 (Add Required)** | **+Add:** `citizen_id`<br>*(Breaking Change)* | `full_name`, `factory`, `position`, `dropoff_point`, **`citizen_id`**<br>*(Required Field - No Default Value)* |
 <br>
 <br>
-## ผลการทดลอง (Experimental results) ##
-### 6.1 โหมด Backward (Backward compatibility) ###
-
+## ผลการทดลอง (Experimental results) ## 
+<br>
+## 6.1 โหมด Backward (Backward compatibility) ## 
+ 
 **Objective:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
 <br>
 <br>
