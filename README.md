@@ -69,7 +69,12 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 <img width="940" height="54" alt="image" src="https://github.com/user-attachments/assets/9647ef09-cacc-4885-9508-2a53398d8708" />
 
 สำหรับการทดลอง B-02 เมื่อทำการลบฟีลด์ในเวอร์ชั่นใหม่พบว่า Consumer ยังคงสามารถอ่านเวอร์ชั่นเก่าที่ยังคงมีฟิลด์ได้ โดยเหมือนการมองข้ามว่าไม่เคยมีฟีลด์นั้น
-<img width="928" height="186" alt="{2C0D72F0-9ABD-4C99-AEA7-349CFF2BA71F}" src="https://github.com/user-attachments/assets/babee8af-5954-4bc0-b560-6679b159cc48" />
+<br>
+<img width="464" height="93" alt="{2C0D72F0-9ABD-4C99-AEA7-349CFF2BA71F}" src="https://github.com/user-attachments/assets/92c3513c-eea5-4de8-bac1-ae33e9a09996" />
+<img width="474" height="81" alt="{7C205736-5177-48BE-A573-19EA29C5DC65}" src="https://github.com/user-attachments/assets/61fa5d44-1ef0-421d-abcf-a13dc7a0cd9f" />
+
+
+
 
 
 
