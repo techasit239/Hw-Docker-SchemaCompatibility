@@ -106,7 +106,7 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 | **F-02** | **Action:** Remove Required Field (v2 $\rightarrow$ v3)<br>**Scenario:** ส่งข้อมูล v3 (ไม่มี `dropoff_point`) ให้ Consumer v2 | **Failure**<br>(Missing Required) | ❌<br>FAIL | **Breaking Change!** Consumer v2 จำเป็นต้องใช้ `dropoff_point` เมื่อ v3 ไม่ส่งมาให้ ระบบจึงล่ม |
 | **F-03** | **Action:** Delete Field (with Default)<br>**Scenario:** ลบฟิลด์ที่มี Default ใน Schema เก่า | **Success**<br>(Use Local Default) | ✅<br>PASS | Consumer เก่าจะดึงค่า Default ในเครื่องตัวเองมาใช้แทนค่าที่หายไป |
 | **F-04** | **Action:** Change Type (Risk)<br>**Scenario:** เปลี่ยน `float` เป็น `int` | **Failure**<br>(Precision Loss) | ❌<br>FAIL | **Updated:** การส่งข้อมูลทศนิยม (Float) ให้ Consumer ที่รอรับจำนวนเต็ม (Int) ทำไม่ได้ เพราะข้อมูลจะสูญหาย (เช่น 5.5 $\rightarrow$ 5) |
-| **F-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | Consumer เก่าคาดหวังตัวเลข แต่ได้รับข้อความ อ่านไม่ออกแน่นอน |
+| **F-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | Consumer เก่าคาดหวังตัวเลข แต่ได้รับข้อความ อ่านไม่ออกแน่นอน | 
 
 
 ### สรุปผลการทดลอง
