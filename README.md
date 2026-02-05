@@ -129,10 +129,10 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 <br>
  ในการทดลอง F-03 พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ insurance และ phone โดยกำหนดค่า default ให้ (default=null) หรือ เป็น optional field ยังคงสามารถรับข้อความจาก Producer เวอร์ชั่นใหม่ซึ่งตัดฟิลด์ insurance และ phone ออกไปแล้วได้ โดยมันจะดึงค่า default ซึ่งคือ null ของเวอร์ชั่นตัวเองมาใช้แทนในฟิลด์ที่หายไปในเวอร์ชั่นใหม่ 
 <br>
-<img width="467" height="53" alt="{1343171C-B292-4F47-BCED-C0387C67D0B0}" src="https://github.com/user-attachments/assets/93a224cd-2dbc-4006-ad3b-1a188e005299" />
+<img width="713 height="80" alt="{1343171C-B292-4F47-BCED-C0387C67D0B0}" src="https://github.com/user-attachments/assets/93a224cd-2dbc-4006-ad3b-1a188e005299" />
 <img width="ึ713" height="80" alt="{07BA5DF2-100B-43C2-9FD6-AC20C5E7C478}" src="https://github.com/user-attachments/assets/b96c7dbd-047a-49d2-b296-4d1d07238fc8" />
 
-<br> 
+<br>  
 
 
 
