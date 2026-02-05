@@ -25,15 +25,18 @@
 
 ## ผลการทดลอง (Experimental results)
 ### 6.1 โหมด Backward (Backward compatibility)
-**Objective:** Verify that the **new consumer** can read data produced with the **old schema**.
+**Objective:** Consumer ที่ใช้ Schema ใหม่สามารถอ่านข้อความที่ถูกสร้างด้วย Schema เก่าได้หรือไม่
 
-| ID | Action | Scenario Description | Expected Result | Status | Note |
-| :----- | :--- | :--- | :--- | :---: | :--- |
-| **B-01**   | Delete Field | Remove `ticket_total_value` field | **Success** | ✅ PASS | New consumer ignores the deleted field present in old data. |
-| **B-02**   | Add Field (w/ Default) | Add `genre` field with default value | **Success** | ✅ PASS | New consumer fills in default value for missing field in old data. |
-| **B-03**   | Add Field (No Default) | Add `director` field without default | **Failure** | ❌ FAIL | Error 409. New consumer cannot handle missing field without a default. |
-| **B-04**   | Change Type (Compatible) | Change `int` to `long` | **Success** | ✅ PASS | Avro allows promotion from int to long. |
-| **B-05**   | Change Type (Incompatible) | Change `int` to `string` | **Failure** | ❌ FAIL | Type mismatch. Cannot safely convert int to string in backward mode. |
+**วัตถุประสงค์:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
+
+| ID | Action & Scenario | Expected result | Result status | Noted |
+| :--- | :--- | :--- | :---: | :--- |
+| **B-01** | **Action:** ลบฟิลด์ (Delete Field)**Scenario:** ลบฟิลด์ `ticket_total_value` ออก | **สำเร็จ**<br>(Consumer มองข้ามฟิลด์ที่หายไป) | ✅ PASS | Consumer ตัวใหม่จะมองข้ามฟิลด์ที่ถูกลบออกจาก Schema ไป แม้ว่าในข้อมูลเก่าจะมีฟิลด์นี้อยู่ก็ตาม |
+| **B-02** | **Action:** เพิ่มฟิลด์ (มี Default)**Scenario:** เพิ่มฟิลด์ `genre` พร้อมค่า Default | **สำเร็จ**<br>(เติมค่า Default อัตโนมัติ) | ✅ PASS | ข้อมูลเก่าไม่มีฟิลด์นี้ แต่ Consumer ตัวใหม่จะเติมค่า Default ให้เองอัตโนมัติตามที่กำหนดไว้ |
+| **B-03** | **Action:** เพิ่มฟิลด์ (ไม่มี Default)**Scenario:** เพิ่มฟิลด์ `director` โดยไม่ใส่ Default | **ล้มเหลว**<br>(Error 409 Conflict) | ❌ FAIL | Consumer ตัวใหม่พัง เพราะข้อมูลเก่าไม่มีฟิลด์นี้ส่งมา และไม่มีค่า Default ให้ดึงไปใช้ |
+| **B-04** | **Action:** เปลี่ยน Data Type (เข้ากันได้)**Scenario:** เปลี่ยน `int` เป็น `long` | **สำเร็จ**<br>(Type Promotion) | ✅ PASS | Avro อนุญาตให้เปลี่ยนจากเล็กไปใหญ่ (Int -> Long) ได้อย่างปลอดภัยในโหมด Backward |
+| **B-05** | **Action:** เปลี่ยน Data Type (เข้ากันไม่ได้**Scenario:** เปลี่ยน `int` เป็น `string` | **ล้มเหลว**<br>(Type Mismatch) | ❌ FAIL | Consumer ตัวใหม่ไม่สามารถแปลงตัวเลข (Int) เป็นข้อความ (String) ได้โดยตรงโดยไม่มี Logic เพิ่มเติม |
+
 
 ### ผลการทดลอง
 เมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
