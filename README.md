@@ -27,15 +27,18 @@
 ## 📊 Visualizing Schema Evolution (ภาพรวมการเปลี่ยนแปลง)
 
 ตารางนี้แสดงลำดับการเปลี่ยนแปลงโครงสร้างข้อมูล (Schema) ในแต่ละเวอร์ชันของการทดลอง:
+## 📊 Visualizing Schema Evolution (ภาพรวมการเปลี่ยนแปลง)
+
+ตารางนี้แสดงลำดับการเปลี่ยนแปลงโครงสร้างข้อมูล (Schema) ในแต่ละเวอร์ชันของการทดลอง:
+
 | Version | Changes (การเปลี่ยนแปลง) | Schema Definition (โครงสร้างข้อมูล) |
 | :--- | :--- | :--- |
-| **v1 (Base)** | - | `full_name`, `factory` (string), `position`, `dropoff_point` |
+| **v1 (Base)** | - | `full_name`, `factory`, `position`, `dropoff_point` |
 | **v2 (Add Field)** | **+Add:** `insurance`, `phone`<br>*(Backward Compatible)* | `full_name`, `factory`, `position`, `dropoff_point`, `insurance`*, `phone`*<br>*(Nullable & Default=null)* |
 | **v3 (Remove Field)** | **-Remove:** `dropoff_point`<br>*(Forward Incompatible)* | `full_name`, `factory`, `position`, `insurance`*, `phone`*<br>*(ฟิลด์ dropoff_point หายไป)* |
-| **v4 (Type Change)** | **Change:** `factory` (String $\to$ Long)<br>*(Extra: Test Type Promotion)* | `full_name`, **`factory` (Long)**, `position`, `dropoff_point` |
-| **v5 (Type Mismatch)** | **Change:** `factory` (String $\to$ Int)<br>*(Extra: Test Incompatible Type)* | `full_name`, **`factory` (Int)**, `position`, `dropoff_point` |
-| **v6 (Add Required)** | **+Add:** `citizen_id`<br>*(Extra: Breaking Change)* | `full_name`, `factory`, `position`, `dropoff_point`, **`citizen_id`**<br>*(Required Field - No Default Value)* |
-<br>
+| **v4 (Type Promotion)** | **Change:** `factory` (`int` $\to$ `float`)<br>*(Compatible: Int fits in Float)* | `full_name`, **`factory` (float)**, `position`, `dropoff_point`<br>*(ทดสอบการเปลี่ยนจำนวนเต็มเป็นทศนิยม)* |
+| **v5 (Type Precision)** | **Change:** `factory` (`float` $\to$ `int`)<br>*(Risk: Data Loss)* | `full_name`, **`factory` (int)**, `position`, `dropoff_point`<br>*(ทดสอบการเปลี่ยนทศนิยมเป็นจำนวนเต็ม)* |
+| **v6 (Add Required)** | **+Add:** `citizen_id`<br>*(Breaking Change)* | `full_name`, `factory`, `position`, `dropoff_point`, **`citizen_id`**<br>*(Required Field - No Default Value)* |<br>
 
 ## ผลการทดลอง (Experimental results)
 ### 6.1 โหมด Backward (Backward compatibility)
