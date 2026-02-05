@@ -61,7 +61,7 @@
 
 
 ### สรุปผลการทดลอง
- จากการทดลองแบบที่ B-03 พบว่าเมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
+ จากการทดลองแบบที่ **B-03** พบว่าเมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
 READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 
 <img width="809" height="278" alt="image" src="https://github.com/user-attachments/assets/5bf02240-b02a-4e27-9f6f-d9d5b7edf056" />
@@ -73,20 +73,23 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 <img width="940" height="54" alt="image" src="https://github.com/user-attachments/assets/9647ef09-cacc-4885-9508-2a53398d8708" />
 
 <br>
-สำหรับการทดลอง B-02 เมื่อทำการลบฟีลด์ (dropoff_point) ในเวอร์ชั่นใหม่ (version 3) พบว่า Consumer เวอร์ชั่นใหม่ที่ไม่มีฟีลด์ dropoff_point ยังคงสามารถอ่านเวอร์ชั่นเก่าที่ยังคงมีฟิลด์ dropoff_point ได้ (version 2) โดยเหมือนการมองข้ามว่าไม่เคยมีฟีลด์ dropoff_point นั้น
+
+สำหรับการทดลอง **B-02** เมื่อทำการลบฟีลด์ (dropoff_point) ในเวอร์ชั่นใหม่ (version 3) พบว่า Consumer เวอร์ชั่นใหม่ที่ไม่มีฟีลด์ dropoff_point ยังคงสามารถอ่านเวอร์ชั่นเก่าที่ยังคงมีฟิลด์ dropoff_point ได้ (version 2) โดยเหมือนการมองข้ามว่าไม่เคยมีฟีลด์ dropoff_point นั้น 
 <br>
 <img width="464" height="93" alt="{2C0D72F0-9ABD-4C99-AEA7-349CFF2BA71F}" src="https://github.com/user-attachments/assets/92c3513c-eea5-4de8-bac1-ae33e9a09996" />
 <img width="474" height="81" alt="{7C205736-5177-48BE-A573-19EA29C5DC65}" src="https://github.com/user-attachments/assets/61fa5d44-1ef0-421d-abcf-a13dc7a0cd9f" />
 
 <br>
-สำหรับการทดลอง B-04 เมื่อทำการเปลี่ยน data type (factory) แบบที่ยังเป็น type ตัวเลขเหมือนกัน แต่เปลี่ยนจาก int เป็น float พบว่า Consumer เวอร์ชั่นใหม่ที่รับค่าเป็น float ยังคงสามารถอ่านค่าจากเวอร์ชั่นเก่าที่เป็น int ได้ (50 --> 50.0)เนื่องจาก float มีความละเอียดเชิงตัวเลขจากทศนิยมมากกว่า int จึงไม่มีผลในแง่ของความแม่นยำ
+
+สำหรับการทดลอง **B-04** เมื่อทำการเปลี่ยน data type (factory) แบบที่ยังเป็น type ตัวเลขเหมือนกัน แต่เปลี่ยนจาก int เป็น float พบว่า Consumer เวอร์ชั่นใหม่ที่รับค่าเป็น float ยังคงสามารถอ่านค่าจากเวอร์ชั่นเก่าที่เป็น int ได้ (50 --> 50.0)เนื่องจาก float มีความละเอียดเชิงตัวเลขจากทศนิยมมากกว่า int จึงไม่มีผลในแง่ของความแม่นยำ
 <br>
 <img width="462" height="62" alt="{D94C026A-6E87-41FC-B5E1-5C04EB71FA37}" src="https://github.com/user-attachments/assets/26d8e099-f139-4326-bda4-1b077299ff80" />
 <img width="469" height="58" alt="image" src="https://github.com/user-attachments/assets/b6f0669c-5eec-4b8f-9b56-d33ef0c0c949" />
 <br>
 
 <br>
-สำหรับการทดลอง B-05 เมื่อทำการเปลี่ยน data type (factory) แต่คราวนี้เปลี่ยนจาก ตัวเลข ที่เป็น int เป็น string เลย พบว่า Consumer เวอร์ชั่นใหม่ที่รับค่าเป็น string จะ Error (50 --> '50') เนื่องจากไม่สามารถรับค่าที่เป็นตัวเลขแล้วมาแปลงเป็น string ที่หน้าตาเหมือนตัวเลขได้โดยตรง เพราะเป็น data type ที่ต่างชนิดกันอย่างสิ้นเชิง
+
+สำหรับการทดลอง **B-05** เมื่อทำการเปลี่ยน data type (factory) แต่คราวนี้เปลี่ยนจาก ตัวเลข ที่เป็น int เป็น string เลย พบว่า Consumer เวอร์ชั่นใหม่ที่รับค่าเป็น string จะ Error (50 --> '50') เนื่องจากไม่สามารถรับค่าที่เป็นตัวเลขแล้วมาแปลงเป็น string ที่หน้าตาเหมือนตัวเลขได้โดยตรง เพราะเป็น data type ที่ต่างชนิดกันอย่างสิ้นเชิง
 <br>
 <img width="696" height="53" alt="{4D155383-1886-4BE9-85F3-9F89732869FC}" src="https://github.com/user-attachments/assets/a2a5deed-e009-4dc9-9082-7e4ed5bee534" />
 <img width="696" height="53" alt="{AA3B23AE-EA3D-4F3B-8BDB-B8A0512B96A8}" src="https://github.com/user-attachments/assets/25a12ed7-8e43-4d28-a76b-66a065838e27" />
@@ -110,7 +113,7 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 
 
 ### สรุปผลการทดลอง
- ในการทดลอง F-01 เมื่อ Producer ส่งข้อมูลด้วย Schema v2 และ Consumer ใช้ Schema v1 พบว่าสามารถอ่านข้อความได้ตามปกติ โดยฟิลด์ insurance และ phone ถูกละเว้นโดยอัตโนมัติ อย่างไรก็ตาม เมื่อทดลองเปลี่ยนชนิดข้อมูลของฟิลด์เดิม (factory จาก string เป็น int) ระบบปฏิเสธ Schema ด้วยข้อผิดพลาดTYPE_MISMATCH (HTTP 409)
+ ในการทดลอง **F-01** เมื่อ Producer ส่งข้อมูลด้วย Schema v2 และ Consumer ใช้ Schema v1 พบว่าสามารถอ่านข้อความได้ตามปกติ โดยฟิลด์ insurance และ phone ถูกละเว้นโดยอัตโนมัติ อย่างไรก็ตาม เมื่อทดลองเปลี่ยนชนิดข้อมูลของฟิลด์เดิม (factory จาก string เป็น int) ระบบปฏิเสธ Schema ด้วยข้อผิดพลาดTYPE_MISMATCH (HTTP 409)
 
 <img width="940" height="49" alt="image" src="https://github.com/user-attachments/assets/572c4508-7e1e-4a4d-bbd2-6d857e0ad01a" />
 <img width="940" height="67" alt="image" src="https://github.com/user-attachments/assets/e412badc-5149-4d48-86b3-f399238a7239" />
@@ -120,20 +123,22 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 Forward mode ไม่รองรับการเปลี่ยนชนิดข้อมูลของฟิลด์เดิม หากจำเป็นต้องเปลี่ยนควรใช้แนวทางเพิ่มฟิลด์ใหม่แทน เช่น factory_id และคงฟิลด์เดิมไว้ในช่วงเปลี่ยนผ่าน
 
 <br>
- ในการทดลอง F-02 พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ dropoff_point ไม่สามารถอ่านข้อความจาก Producer เวอร์ชั่นใหม่ที่ไม่มี dropoff_point ได้ เนื่องจากเป็นฟิลด์ที่ไม่ได้กำหนดค่า Default หรือ ก็คือ required field ทำให้ Consumer เวอร์ชั่นเก่าที่ต้องการค่าจาก dropoff_point ไม่สามารถอ่านค่าได้ จึงเกิด Error
+
+ ในการทดลอง **F-02** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ dropoff_point ไม่สามารถอ่านข้อความจาก Producer เวอร์ชั่นใหม่ที่ไม่มี dropoff_point ได้ เนื่องจากเป็นฟิลด์ที่ไม่ได้กำหนดค่า Default หรือ ก็คือ required field ทำให้ Consumer เวอร์ชั่นเก่าที่ต้องการค่าจาก dropoff_point ไม่สามารถอ่านค่าได้ จึงเกิด Error
 <br>
 <img width="707" height="51" alt="{70843EAC-6D58-4292-A878-0FEF17D024A7}" src="https://github.com/user-attachments/assets/6ac828fc-097c-40ed-abf7-eaee4268a217" />
 <img width="ึ707" height="51" alt="{7D57423A-F009-46B1-8663-111DBFA13E41}" src="https://github.com/user-attachments/assets/373a3454-1ae0-404e-8e25-1765cc49a9cc" />
 <br> 
 
 <br>
- ในการทดลอง F-03 พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ insurance และ phone โดยกำหนดค่า default ให้ (default=null) หรือ เป็น optional field ยังคงสามารถรับข้อความจาก Producer เวอร์ชั่นใหม่ซึ่งตัดฟิลด์ insurance และ phone ออกไปแล้วได้ โดยมันจะดึงค่า default ซึ่งคือ null ของเวอร์ชั่นตัวเองมาใช้แทนในฟิลด์ที่หายไปในเวอร์ชั่นใหม่ 
+
+ ในการทดลอง **F-03** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ insurance และ phone โดยกำหนดค่า default ให้ (default=null) หรือ เป็น optional field ยังคงสามารถรับข้อความจาก Producer เวอร์ชั่นใหม่ซึ่งตัดฟิลด์ insurance และ phone ออกไปแล้วได้ โดยมันจะดึงค่า default ซึ่งคือ null ของเวอร์ชั่นตัวเองมาใช้แทนในฟิลด์ที่หายไปในเวอร์ชั่นใหม่ 
 <br>
 <img width="713 height="80" alt="{1343171C-B292-4F47-BCED-C0387C67D0B0}" src="https://github.com/user-attachments/assets/93a224cd-2dbc-4006-ad3b-1a188e005299" />
 <img width="ึ713" height="80" alt="{07BA5DF2-100B-43C2-9FD6-AC20C5E7C478}" src="https://github.com/user-attachments/assets/b96c7dbd-047a-49d2-b296-4d1d07238fc8" />
 
 <br>  
-
+ 
 
 
 
