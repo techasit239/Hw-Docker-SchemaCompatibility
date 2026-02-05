@@ -36,6 +36,7 @@
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
 <br>
+<br>
 **Experiment details:**
 | ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
@@ -62,6 +63,7 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 ## 6.2 โหมด Forward (Forward compatibility)
 
 **Objective:** ตรวจสอบว่า **Consumer ตัวเก่า** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวใหม่** ได้หรือไม่
+<br>
 <br>
 **Experiment details:**
 | ID | Action & Scenario | Expected Result | Status | Note |
@@ -90,6 +92,7 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 ## 6.3 โหมด Full (Full mode)
 
 **Objective:** ตรวจสอบความเข้ากันได้ **ทั้งสองทิศทาง** (ปลอดภัยที่สุด upgradeฝั่งไหนก่อนก็ได้)
+<br>
 <br>
 **Experiment details:**
 | ID | Action & Scenario | Expected Result | Status | Note |
