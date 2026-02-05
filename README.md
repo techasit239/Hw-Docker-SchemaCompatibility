@@ -164,8 +164,8 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 | **FULL-04** | **Action:** Change Type<br>**Scenario:** สลับ `int` $\leftrightarrow$ `float` | **Failure**<br>(Strict Type Check) | ❌<br>FAIL | **Updated:** แม้ Backward จะผ่าน (Int $\rightarrow$ Float) แต่ Forward ไม่ผ่าน (Float $\rightarrow$ Int) จึงสรุปว่า **FAIL** |
 | **FULL-05** | **Action:** Rename Field<br>**Scenario:** เปลี่ยนชื่อ `factory` เป็น `plant` | **Failure**<br>(Field Missing) | ❌<br>FAIL | Avro มองว่าคือการ "ลบ field เก่า" และ "เพิ่ม field ใหม่" พร้อมกัน ซึ่งมักจะติดเงื่อนไข Required Field |
 
-ในการใช้โหมด Full เราสามารถเพิ่ม field ใหม่ได้ โดยมีค่า Default ให้ 
-แต่ใน Full-03, FULL-03 ในการทดลอง พบว่า ไม่สามารถลบ Field ที่มีอยู่เดิมได้ หาก field นั้นๆ ไม่มีการ Set ค่า Default ไว้ได้ โดยหากลบจะให้ผลตามภาพ แต่หาก Field ดังกล่าว มีค่า Default สามารถ remove field นั้นออกได้
+ในการใช้โหมด Full เราสามารถเพิ่ม field ใหม่ได้ โดยมีค่า Default ให้   
+แต่ในการทดลอง Full-02 และ FULL-03 พบว่า ไม่สามารถลบ Field ที่มีอยู่เดิมได้ หาก field นั้นๆ ไม่มีการ Set ค่า Default ไว้ได้ แต่หาก Field ดังกล่าว มีค่า Default สามารถ remove field นั้นออกได้
 <img width="881" height="804" alt="image" src="https://github.com/user-attachments/assets/2efcac2f-4107-450c-9821-0dd809d58593" />
 ในการเปลี่ยน Data Type ไม่สามารถเปลี่ยนจาก Data type ใด data type หนึ่ง เป็นอีก data type ได้เลย โดยทดลองทั้ง string >> float/int, int >> string/float และ float >> string/int 
 
