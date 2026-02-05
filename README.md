@@ -28,7 +28,7 @@
 **Objective:** Verify that the **new consumer** can read data produced with the **old schema**.
 
 | ID | Action | Scenario Description | Expected Result | Status | Note |
-| :--- | :--- | :--- | :--- | :---: | :--- |
+| :----- | :--- | :--- | :--- | :---: | :--- |
 | **B-01**   | Delete Field | Remove `ticket_total_value` field | **Success** | ✅ PASS | New consumer ignores the deleted field present in old data. |
 | **B-02**   | Add Field (w/ Default) | Add `genre` field with default value | **Success** | ✅ PASS | New consumer fills in default value for missing field in old data. |
 | **B-03**   | Add Field (No Default) | Add `director` field without default | **Failure** | ❌ FAIL | Error 409. New consumer cannot handle missing field without a default. |
