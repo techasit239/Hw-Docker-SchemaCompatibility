@@ -58,7 +58,7 @@
 | **B-03** | **Action:** Add Required Field (No Default)<br>**Scenario:** เพิ่มฟิลด์ `citizen_id` **โดยไม่ใส่ Default** | **Failure**<br>(Error 409) | ❌<br>FAIL | Consumer ใหม่พังทันที เพราะข้อมูลเก่าไม่มีค่านี้ส่งมาและไม่มี Default ให้ใช้ |
 | **B-04** | **Action:** Change Type (Compatible)<br>**Scenario:** เปลี่ยน `int` เป็น `float` | **Success**<br>(Type Promotion) | ✅<br>PASS | **Updated:** Avro อนุญาตให้เปลี่ยน `int` (จำนวนเต็ม) เป็น `float` (ทศนิยม) ได้อย่างปลอดภัย (เช่น 5 $\rightarrow$ 5.0) |
 | **B-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | ไม่สามารถแปลงตัวเลขเป็นข้อความได้โดยตรง Consumer จะ Error | 
-
+ 
 
 ### สรุปผลการทดลอง
  จากการทดลองแบบที่ **B-03** พบว่าเมื่อพยายามเพิ่มฟิลด์ใหม่ที่เป็น Required และไม่มีค่า Default (เช่น employee_id) ระบบ Schema Registry ปฏิเสธการลงทะเบียน Schema ด้วยข้อผิดพลาด
@@ -126,13 +126,13 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
  ในการทดลอง **F-02** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ dropoff_point ไม่สามารถอ่านข้อความจาก Producer เวอร์ชั่นใหม่ที่ไม่มี dropoff_point ได้ เนื่องจากเป็นฟิลด์ที่ไม่ได้กำหนดค่า Default หรือ ก็คือ required field ทำให้ Consumer เวอร์ชั่นเก่าที่ต้องการค่าจาก dropoff_point ไม่สามารถอ่านค่าได้ จึงเกิด Error
 <br>
-<img width="707" height="51" alt="{70843EAC-6D58-4292-A878-0FEF17D024A7}" src="https://github.com/user-attachments/assets/6ac828fc-097c-40ed-abf7-eaee4268a217" />
+<img width="707" height="56" alt="{70843EAC-6D58-4292-A878-0FEF17D024A7}" src="https://github.com/user-attachments/assets/6ac828fc-097c-40ed-abf7-eaee4268a217" />
 <img width="ึ707" height="51" alt="{7D57423A-F009-46B1-8663-111DBFA13E41}" src="https://github.com/user-attachments/assets/373a3454-1ae0-404e-8e25-1765cc49a9cc" />
 <br> 
 
 <br>
  ในการทดลอง **F-03** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ insurance และ phone โดยกำหนดค่า default ให้ (default=null) หรือ เป็น optional field ยังคงสามารถรับข้อความจาก Producer เวอร์ชั่นใหม่ซึ่งตัดฟิลด์ insurance และ phone ออกไปแล้วได้ โดยมันจะดึงค่า default ซึ่งคือ null ของเวอร์ชั่นตัวเองมาใช้แทนในฟิลด์ที่หายไปในเวอร์ชั่นใหม่
-<br> 
+ 
 <img width="713" height="80" alt="{1343171C-B292-4F47-BCED-C0387C67D0B0}" src="https://github.com/user-attachments/assets/93a224cd-2dbc-4006-ad3b-1a188e005299" />
 <img width="ึ713" height="80" alt="{07BA5DF2-100B-43C2-9FD6-AC20C5E7C478}" src="https://github.com/user-attachments/assets/b96c7dbd-047a-49d2-b296-4d1d07238fc8" />
 
