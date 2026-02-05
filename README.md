@@ -110,15 +110,22 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 
 
 ### สรุปผลการทดลอง
-เมื่อ Producer ส่งข้อมูลด้วย Schema v2 และ Consumer ใช้ Schema v1 พบว่าสามารถอ่านข้อความได้ตามปกติ โดยฟิลด์ insurance และ phone ถูกละเว้นโดยอัตโนมัติ อย่างไรก็ตาม เมื่อทดลองเปลี่ยนชนิดข้อมูลของฟิลด์เดิม (factory จาก string เป็น int) ระบบปฏิเสธ Schema ด้วยข้อผิดพลาดTYPE_MISMATCH (HTTP 409)
+ ในการทดลอง F-01 เมื่อ Producer ส่งข้อมูลด้วย Schema v2 และ Consumer ใช้ Schema v1 พบว่าสามารถอ่านข้อความได้ตามปกติ โดยฟิลด์ insurance และ phone ถูกละเว้นโดยอัตโนมัติ อย่างไรก็ตาม เมื่อทดลองเปลี่ยนชนิดข้อมูลของฟิลด์เดิม (factory จาก string เป็น int) ระบบปฏิเสธ Schema ด้วยข้อผิดพลาดTYPE_MISMATCH (HTTP 409)
 
 <img width="940" height="49" alt="image" src="https://github.com/user-attachments/assets/572c4508-7e1e-4a4d-bbd2-6d857e0ad01a" />
 <img width="940" height="67" alt="image" src="https://github.com/user-attachments/assets/e412badc-5149-4d48-86b3-f399238a7239" />
 
 <img width="940" height="270" alt="image" src="https://github.com/user-attachments/assets/3986fdc8-4369-453c-9ac0-7c1b3bfd402a" />
 
- 
 Forward mode ไม่รองรับการเปลี่ยนชนิดข้อมูลของฟิลด์เดิม หากจำเป็นต้องเปลี่ยนควรใช้แนวทางเพิ่มฟิลด์ใหม่แทน เช่น factory_id และคงฟิลด์เดิมไว้ในช่วงเปลี่ยนผ่าน
+
+<br>
+ ในการทดลอง F-02 พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ dropoff_point ไม่สามารถอ่านข้อความจาก Producer เวอร์ชั่นใหม่ที่ไม่มี dropoff_point ได้ เนื่องจากเป็นฟิลด์ที่ไม่ได้กำหนดค่า Default หรือ ก็คือ required field ทำให้ Consumer เวอร์ชั่นเก่าที่ต้องการค่าจาก dropoff_point ไม่สามารถอ่านค่าได้ จึงเกิด Error
+<br>
+<img width="467" height="56" alt="{70843EAC-6D58-4292-A878-0FEF17D024A7}" src="https://github.com/user-attachments/assets/6ac828fc-097c-40ed-abf7-eaee4268a217" />
+<img width="471" height="34" alt="{7D57423A-F009-46B1-8663-111DBFA13E41}" src="https://github.com/user-attachments/assets/373a3454-1ae0-404e-8e25-1765cc49a9cc" />
+
+
 
 
 
