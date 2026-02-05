@@ -138,11 +138,11 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
 <br>  
 
- ในการทดลอง **F-04** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่ฟิลด์ factory มี data type เป็น int ไม่สามารถรับข้อความที่ data type เป็น float ได้ (float --> int) เนื่องจาก float เป็นตัวเลขระดับทศนิยมซึ่งมีความละเอียดกว่า จึงทำให้มีโอกาสที่ข้อมูลปลายทางที่ consumer รับจะคลาดเคลื่อนในเชิงทศนิยมได้ จึงทำให้เกิด Error <br>
+ ในการทดลอง **F-04** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่ฟิลด์ factory มี data type เป็น int ไม่สามารถรับข้อความที่ data type เป็น float ได้ (float --> int) เนื่องจาก float เป็นตัวเลขระดับทศนิยมซึ่งมีความละเอียดกว่า จึงทำให้มีโอกาสที่ข้อมูลปลายทางที่ consumer รับจะคลาดเคลื่อนในเชิงทศนิยมได้ จึงทำให้เกิด Error<br> 
 <img width="464" height="57" alt="{05719A98-1D75-452A-92F5-52E5096ED64D}" src="https://github.com/user-attachments/assets/65940f3e-e2dd-4379-8310-6ba309052a44" />
 <img width="456" height="33" alt="{7AA119E1-4453-4CD9-9CBB-5D98E77E1A61}" src="https://github.com/user-attachments/assets/96fd0fec-9284-479f-a2cc-9fda4fe1ffff" />
 
-
+ 
 
 
 
