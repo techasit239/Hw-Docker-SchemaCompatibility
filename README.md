@@ -109,13 +109,13 @@ READER_FIELD_MISSING_DEFAULT_VALUE (HTTP 409)
 | **F-02** | **Action:** Remove Required Field (v2 $\rightarrow$ v3)<br>**Scenario:** ส่งข้อมูล v3 (ไม่มี `dropoff_point`) ให้ Consumer v2 | **Failure**<br>(Missing Required) | ❌<br>FAIL | **Breaking Change!** Consumer v2 จำเป็นต้องใช้ `dropoff_point` เมื่อ v3 ไม่ส่งมาให้ ระบบจึงล่ม |
 | **F-03** | **Action:** Delete Field (with Default)<br>**Scenario:** ลบฟิลด์ที่มี Default ใน Schema เก่า | **Success**<br>(Use Local Default) | ✅<br>PASS | Consumer เก่าจะดึงค่า Default ในเครื่องตัวเองมาใช้แทนค่าที่หายไป |
 | **F-04** | **Action:** Change Type (Risk)<br>**Scenario:** เปลี่ยน `float` เป็น `int` | **Failure**<br>(Precision Loss) | ❌<br>FAIL | **Updated:** การส่งข้อมูลทศนิยม (Float) ให้ Consumer ที่รอรับจำนวนเต็ม (Int) ทำไม่ได้ เพราะข้อมูลจะสูญหาย (เช่น 5.5 $\rightarrow$ 5) |
-| **F-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `int` เป็น `string` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | Consumer เก่าคาดหวังตัวเลข แต่ได้รับข้อความ จึงอ่านไม่ได้ | 
+| **F-05** | **Action:** Change Type (Incompatible)<br>**Scenario:** เปลี่ยน `string` เป็น `int` | **Failure**<br>(Type Mismatch) | ❌<br>FAIL | Consumer เก่าคาดหวังข้อความ แต่ได้รับตัวเลข จึงอ่านไม่ได้ | 
 
 
 ### สรุปผลการทดลอง 
  ในการทดลอง **F-01** เมื่อ Producer ส่งข้อมูลด้วย Schema v2 และ Consumer ใช้ Schema v1 พบว่าสามารถอ่านข้อความได้ตามปกติ โดยฟิลด์ insurance และ phone ถูกละเว้นโดยอัตโนมัติ อย่างไรก็ตาม เมื่อทดลองเปลี่ยนชนิดข้อมูลของฟิลด์เดิม (factory จาก string เป็น int) ระบบปฏิเสธ Schema ด้วยข้อผิดพลาดTYPE_MISMATCH (HTTP 409)
 
-<img width="940" height="49" alt="image" src="https://github.com/user-attachments/assets/572c4508-7e1e-4a4d-bbd2-6d857e0ad01a" />
+<img width="940" height="49" alt="image" src="https://github.com/user-attachments/assets/572c4508-7e1e-4a4d-bbd2-6d857e0ad01a" /> 
 <img width="940" height="67" alt="image" src="https://github.com/user-attachments/assets/e412badc-5149-4d48-86b3-f399238a7239" />
 
 <img width="940" height="270" alt="image" src="https://github.com/user-attachments/assets/3986fdc8-4369-453c-9ac0-7c1b3bfd402a" />
@@ -138,12 +138,17 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
 <br>  
 
- ในการทดลอง **F-04** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่ฟิลด์ factory มี data type เป็น int ไม่สามารถรับข้อความที่ data type เป็น float ได้ (float --> int) เนื่องจาก float เป็นตัวเลขระดับทศนิยมซึ่งมีความละเอียดกว่า จึงทำให้มีโอกาสที่ข้อมูลปลายทางที่ consumer รับจะคลาดเคลื่อนในเชิงทศนิยมได้ จึงทำให้เกิด Error<br> 
+ ในการทดลอง **F-04** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่ฟิลด์ factory มี data type เป็น int ไม่สามารถรับข้อความที่ data type เป็น float ได้ (float --> int) ถึงแม้จะเป็นข้อมูลตัวเลขเหมือนกันก็ตาม เนื่องจาก float เป็นตัวเลขระดับทศนิยมซึ่งมีความละเอียดกว่า จึงทำให้มีโอกาสที่ข้อมูลปลายทางที่ Consumer รับจะคลาดเคลื่อนในเชิงทศนิยมได้ จึงทำให้เกิด Error<br> 
 <img width="464" height="57" alt="{05719A98-1D75-452A-92F5-52E5096ED64D}" src="https://github.com/user-attachments/assets/65940f3e-e2dd-4379-8310-6ba309052a44" />
 <img width="456" height="33" alt="{7AA119E1-4453-4CD9-9CBB-5D98E77E1A61}" src="https://github.com/user-attachments/assets/96fd0fec-9284-479f-a2cc-9fda4fe1ffff" />
 
- 
+<br>
 
+ ในการทดลอง **F-05** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่ฟิลด์ factory มี data type เป็น string ไม่สามารถรับข้อความที่ data type เป็น int ได้ (int --> sting) เนื่องจากเป็นข้อมูลคนละประเภทกันอย่างสิ้นเชิง จึงทำให้เกิด Error<br> 
+<img width="465" height="56" alt="{1257C344-A8D0-40A6-B1E3-32A4B43D8E50}" src="https://github.com/user-attachments/assets/e7beb769-0e7e-43d3-83c3-fa09ec64e769" />
+<img width="471" height="35" alt="{88C2CD6E-9F54-4D98-AA0B-AF96DB6E8FC4}" src="https://github.com/user-attachments/assets/d7eebfe3-f319-4141-a1c2-012ea2f0c75b" />
+
+<br>
 
 
 ## 6.3 โหมด Full (Full mode)
@@ -154,7 +159,7 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 **Experiment details:**
 | ID | Action & Scenario | Expected Result | Status | Note |
 | :--- | :--- | :--- | :---: | :--- |
-| **FULL-01** | **Action:** Add Optional Fields (v1 $\leftrightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (with default) | **Success**<br>(Bidirectional Safe) | ✅<br>PASS | ปลอดภัยทั้ง 2 ทาง: ขา Backward เติม Default, ขา Forward มองข้ามฟิลด์ |
+| **FULL-01** | **Action:** Add Optional Fields (v1 $\leftrightarrow$ v2)<br>**Scenario:** เพิ่ม `insurance`, `phone` (with default) | **Success**<br>(Bidirectional Safe) | ✅<br>PASS | ปลอดภัยทั้ง 2 ทาง: ขา Backward เติม Default, ขา Forward มองข้ามฟิลด์ | 
 | **FULL-02** | **Action:** Remove Required Field (v2 $\leftrightarrow$ v3)<br>**Scenario:** ลบ `dropoff_point` | **Failure**<br>(Fails Forward Check) | ❌<br>FAIL | พังที่ขา **Forward** (เหมือน case F-02) ทำให้ไม่ผ่านเกณฑ์ Full Mode |
 | **FULL-03** | **Action:** Remove Optional Field<br>**Scenario:** ลบฟิลด์ `phone` (ที่มี Default null) | **Success**<br>(Bidirectional Safe) | ✅<br>PASS | หากลบฟิลด์ที่มี Default value จะถือว่าปลอดภัยทั้งสองทิศทาง |
 | **FULL-04** | **Action:** Change Type<br>**Scenario:** สลับ `int` $\leftrightarrow$ `float` | **Failure**<br>(Strict Type Check) | ❌<br>FAIL | **Updated:** แม้ Backward จะผ่าน (Int $\rightarrow$ Float) แต่ Forward ไม่ผ่าน (Float $\rightarrow$ Int) จึงสรุปว่า **FAIL** |
