@@ -25,9 +25,8 @@
 
 ## ผลการทดลอง (Experimental results)
 ### 6.1 โหมด Backward (Backward compatibility)
-**Objective:** Consumer ที่ใช้ Schema ใหม่สามารถอ่านข้อความที่ถูกสร้างด้วย Schema เก่าได้หรือไม่
 
-**วัตถุประสงค์:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
+**Objective:** ตรวจสอบว่า **Consumer ตัวใหม่** สามารถอ่านข้อมูลที่ส่งมาด้วย **Schema ตัวเก่า** ได้หรือไม่
 
 | ID | Action & Scenario | Expected result | Result status | Noted |
 | :--- | :--- | :--- | :---: | :--- |
