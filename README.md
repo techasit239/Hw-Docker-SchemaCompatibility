@@ -135,7 +135,7 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
 
  
-<img width="713" height="80" alt="{1343171C-B292-4F47-BCED-C0387C67D0B0}" src="https://github.com/user-attachments/assets/93a224cd-2dbc-4006-ad3b-1a188e005299" />
+<img width="713" height="60" alt="{1343171C-B292-4F47-BCED-C0387C67D0B0}" src="https://github.com/user-attachments/assets/93a224cd-2dbc-4006-ad3b-1a188e005299" />
 <img width="ึ713" height="80" alt="{07BA5DF2-100B-43C2-9FD6-AC20C5E7C478}" src="https://github.com/user-attachments/assets/b96c7dbd-047a-49d2-b296-4d1d07238fc8" />
 
 <br>  
