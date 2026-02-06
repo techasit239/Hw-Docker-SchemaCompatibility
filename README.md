@@ -1,4 +1,4 @@
-<img width="468" height="36" alt="{C361032D-1B31-475B-9E27-2B659202CE00}" src="https://github.com/user-attachments/assets/eb47d681-a65f-415e-b7d8-6a85d388d72c" /># Hw-Docker-SchemaCompatibility 
+<img width="468" height="36" alt="{C361032D-1B31-475B-9E27-2B659202CE00}" src="https://github.com/user-attachments/assets/eb47d681-a65f-415e-b7d8-6a85d388d72c" /># Hw-Docker-SchemaCompatibility  
 # การปรับเปลี่ยนโครงสร้างข้อมูล (Schema Evolution) สำหรับระบบคิวรถรับส่งพนักงาน กรณีศึกษาการเพิ่มข้อมูลประกันภัยและการติดต่อภายใต้โหมดความเข้ากันได้ของ Schema Registry          
 
 ## ภาพรวม (Overview)
@@ -180,14 +180,12 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 
 
 <img width="461" height="61" alt="{31D4A4C6-AA34-4A25-9480-F4249D5008C4}" src="https://github.com/user-attachments/assets/a6e38ed7-f028-48b4-b2ea-db39cfae7cc0" />
-
+<img width="940" height="286" alt="{C361032D-1B31-475B-9E27-2B659202CE00}" src="https://github.com/user-attachments/assets/4a1b9e57-3816-4cc7-a9b2-7efb7b4de4a2" />
 
 ### สรุปผลการทดลอง 
 การเพิ่มฟิลด์ใหม่แบบ Optional ที่มี Default value ได้รับการยอมรับ อย่างไรก็ตาม การเปลี่ยนชนิดข้อมูลของฟิลด์เดิมถูกปฏิเสธโดย Schema Registry พร้อมข้อผิดพลาด TYPE_MISMATCH ในทั้งสองทิศทาง (reader และ writer)
 
 <img width="940" height="286" alt="image" src="https://github.com/user-attachments/assets/11f13ff8-5551-45a7-a8ab-f2319c632b78" /><br>
-<img width="940" height="286" alt="{C361032D-1B31-475B-9E27-2B659202CE00}" src="https://github.com/user-attachments/assets/4a1b9e57-3816-4cc7-a9b2-7efb7b4de4a2" />
-
 
 
 
