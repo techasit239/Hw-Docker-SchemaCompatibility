@@ -126,7 +126,7 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
  ในการทดลอง **F-02** พบว่าเมื่อ Consumer เวอร์ชั่นเก่าที่มีฟิลด์ dropoff_point ไม่สามารถอ่านข้อความจาก Producer เวอร์ชั่นใหม่ที่ไม่มี dropoff_point ได้ เนื่องจากเป็นฟิลด์ที่ไม่ได้กำหนดค่า Default หรือ ก็คือ required field ทำให้ Consumer เวอร์ชั่นเก่าที่ต้องการค่าจาก dropoff_point ไม่สามารถอ่านค่าได้ จึงเกิด Error
 <br>
 <img width="707" height="56" alt="{70843EAC-6D58-4292-A878-0FEF17D024A7}" src="https://github.com/user-attachments/assets/6ac828fc-097c-40ed-abf7-eaee4268a217" />
-<img width="ึ707" height="51" alt="{7D57423A-F009-46B1-8663-111DBFA13E41}" src="https://github.com/user-attachments/assets/373a3454-1ae0-404e-8e25-1765cc49a9cc" />
+<img width="ึ707" height="51" alt="{7D57423A-F009-46B1-8663-111DBFA13E41}" src="https://github.com/user-attachments/assets/373a3454-1ae0-404e-8e25-1765cc49a9cc" /> 
 <br> 
 
 <br>
@@ -167,15 +167,21 @@ Forward mode ไม่รองรับการเปลี่ยนชนิ�
 | **FULL-07** | **Action:** Rename Field<br>**Scenario:** เปลี่ยนชื่อ `factory` เป็น `plant` | **Failure**<br>(Field Missing) | ❌<br>FAIL | Avro มองว่าคือการ "ลบ field เก่า" และ "เพิ่ม field ใหม่" พร้อมกัน ซึ่งมักจะติดเงื่อนไข Required Field |  
 
 
-ในการใช้โหมด Full เราสามารถเพิ่ม field ใหม่ได้ โดยมีค่า Default ให้   
-แต่ในการทดลอง Full-02 และ FULL-03 พบว่า ไม่สามารถลบ Field ที่มีอยู่เดิมได้ หาก field นั้นๆ ไม่มีการ Set ค่า Default ไว้ได้ แต่หาก Field ดังกล่าว มีค่า Default สามารถ remove field นั้นออกได้  
+ ในการใช้โหมด Full เราสามารถเพิ่ม field ใหม่ได้ โดยมีค่า Default ให้   
+แต่ในการทดลอง **FULL-02** และ **FULL-03** พบว่า ไม่สามารถลบ Field ที่มีอยู่เดิมได้ หาก field นั้นๆ ไม่มีการ Set ค่า Default ไว้ได้ แต่หาก Field ดังกล่าว มีค่า Default สามารถ remove field นั้นออกได้  
 <img width="500" alt="image" src="https://github.com/user-attachments/assets/2efcac2f-4107-450c-9821-0dd809d58593" />  
-ในการเปลี่ยน Data Type ไม่สามารถเปลี่ยนจาก Data type ใด data type หนึ่ง เป็นอีก data type ได้เลย โดยทดลองทั้ง string >> float/int, int >> string/float และ float >> string/int  
+ สำหรับการทดลองที่ **FULL_04**, **FULL-05** และ **FULL-06** เป็นการทดสอบในเรื่องการเปลี่ยน Data Type ไม่สามารถเปลี่ยนจาก Data type ใด data type หนึ่ง เป็นอีก data type ได้เลย โดยทดลองทั้ง string >> float/int, int >> string/float และ float >> string/int
+และในการทดลอง **FULL-07** เป็นการทดสอบในส่วนการเปลี่ยนชื่อ field เดิม ที่ไม่มีการตั้งค่า default ก็ไม่สามารถทำได้ เพราะ AVRO มองว่ามันคือการที่ทำทั้งลบ field เก่าทิ้ง และ สร้าง field ใหม่ ขึ้นมาพร้อมกัน ทำให้ขา Backward เกิด Error เนื่องจาก Consumer เวอร์ชั่นใหม่ ไม่รู้ว่าจะไปรับค่า field ใหม่จากไหน เพราะไม่มีการกำหนด default และ ในทางเดียวกันกับ
+ฝั่ง Forward ก็จะ Error เนื่องจาก Consumer เวอร์ชั่นเก่า ไม่รู้ว่าจะไปรับค่า field เก่าจากไหน เพราะไม่มีการกำหนด default จึงเกิด Error ทั้ง 2 ขา<br>
+<img width="461" height="61" alt="{31D4A4C6-AA34-4A25-9480-F4249D5008C4}" src="https://github.com/user-attachments/assets/a6e38ed7-f028-48b4-b2ea-db39cfae7cc0" />
+
 
 ### สรุปผลการทดลอง 
 การเพิ่มฟิลด์ใหม่แบบ Optional ที่มี Default value ได้รับการยอมรับ อย่างไรก็ตาม การเปลี่ยนชนิดข้อมูลของฟิลด์เดิมถูกปฏิเสธโดย Schema Registry พร้อมข้อผิดพลาด TYPE_MISMATCH ในทั้งสองทิศทาง (reader และ writer)
 
-<img width="940" height="286" alt="image" src="https://github.com/user-attachments/assets/11f13ff8-5551-45a7-a8ab-f2319c632b78" />
+<img width="940" height="286" alt="image" src="https://github.com/user-attachments/assets/11f13ff8-5551-45a7-a8ab-f2319c632b78" /><br>
+<img width="462" height="40" alt="{233DE569-9440-4A65-A8B6-1AE3A16F67DA}" src="https://github.com/user-attachments/assets/0ce0c828-f993-4f8b-8218-f3f733b5ad49" />
+
 
 
 Full mode เป็นโหมดที่เข้มงวดที่สุด เหมาะสำหรับระบบ Production ที่ Producer และ Consumer อัปเกรดไม่พร้อมกัน โดยอนุญาตเฉพาะการเปลี่ยนแปลงที่ไม่ก่อให้เกิด Breaking changes ข้อดีของ FULL คือ การเกิด Error จาก Data type หรือ field หาย จะไม่มีเลย
